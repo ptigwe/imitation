@@ -28,9 +28,9 @@ gboolean random_boolean_with_probability(mpq_t p)
     int i = g_random_int_range(0, mpz_get_si(mpq_denref(p)));
     if(i < mpz_get_si(mpq_numref(p)))
     {
-        return FALSE;
+        return TRUE;
     }
-    return TRUE;
+    return FALSE;
 }
 
 gint random_integer_with_probability(mpq_t *p, gint n)
