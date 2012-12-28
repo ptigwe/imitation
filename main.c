@@ -60,10 +60,11 @@ int main(int argc, char** argv)
     g_printf("count = %i\n", count);
     mpq_clear(p);
     
-    Graph* g = new_grid(3, 3);
-    print_graph(g);
-    free_graph(g);
-    //initUI(&argc, &argv);
+    graph_t *graph = graph_new(GRID_GRAPH, 3, 3);
+    graph_print(graph);
+    graph_free(graph);
+    
+    ui_init(&argc, &argv);
     
     return 0;
 }

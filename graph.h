@@ -6,23 +6,24 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 
-struct graph_t
+#define CYCLE_GRAPH 0
+#define COMPLETE_GRAPH 1
+#define COMPLETE_BIPARTITE_GRAPH 2
+#define UNIFORM_TREE 3
+#define GRID_GRAPH 4
+
+typedef struct
 {
-    GSList** edges;
+    GSList **edges;
     int n;
-    gchar* type;
+    gchar *type;
 }graph_t;
-typedef struct graph_t Graph;
 
-Graph* new_graph(int n);
-Graph* new_cycle(int n);
-Graph* new_complete_graph(int n);
-Graph* new_complete_bipartite_graph(int n);
-Graph* new_uniform_tree(int b, int d);
-Graph* new_grid(int m, int n);
-void free_graph(Graph* g);
-GSList* get_neighbours_of(Graph* g, int i);
+graph_t *graph_new(int graph_type, int p1, int p2);
+void free_graph(graph_t *g);
 
-void print_graph(Graph* g);
+GSList *graph_get_neighbours_of(graph_t *g, int i);
+int graph_number_of_neighbours_of(graph_t *g, int i);
+void graph_print(graph_t *g);
 
 #endif

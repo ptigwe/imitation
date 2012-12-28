@@ -13,7 +13,7 @@ GtkWidget *t;
 
 GtkWidget *compBtn;
 
-void createInputFrame(GtkWidget* inputBox)
+void ui_create_input_frame(GtkWidget* inputBox)
 {
     GtkWidget *inputTable;
     inputTable = gtk_table_new(14, 4, TRUE);
@@ -103,13 +103,13 @@ void createInputFrame(GtkWidget* inputBox)
     gtk_table_attach(GTK_TABLE(inputTable), gtk_hseparator_new(), 0, 4, 12, 13, GTK_EXPAND | GTK_FILL, GTK_SHRINK, 1, 1);
     
     compBtn = gtk_button_new_with_label("Run simulation");
-    g_signal_connect(G_OBJECT(compBtn), "clicked", G_CALLBACK(runSimulation), NULL);
+    g_signal_connect(G_OBJECT(compBtn), "clicked", G_CALLBACK(ui_action_run_simulation), NULL);
     gtk_table_attach(GTK_TABLE(inputTable), compBtn, 1, 3, 13, 14, GTK_EXPAND | GTK_FILL, GTK_SHRINK, 1, 1);
     
     gtk_box_pack_start_defaults(GTK_BOX(inputBox), inputTable);
 }
 
-void initUI(int* argc, char*** argv)
+void ui_init(int *argc, char ***argv)
 {
     gtk_init(argc, argv);
     
@@ -125,13 +125,13 @@ void initUI(int* argc, char*** argv)
     gtk_table_set_row_spacings(GTK_TABLE(table), 10);
     
     menubox = gtk_vbox_new(TRUE, 10);
-    initMenubar(GTK_WINDOW(window), menubox);
+    menu_bar_init(GTK_WINDOW(window), menubox);
     gtk_table_attach(GTK_TABLE(table), menubox, 0, 1, 0, 1,  GTK_EXPAND | GTK_FILL, GTK_SHRINK, 0, 0);
     
     subtable = gtk_table_new(1, 2, FALSE);
     GtkWidget* inputFrame = gtk_frame_new("Input");
     srcbox = gtk_vbox_new(FALSE, 10);
-    createInputFrame(srcbox);
+    ui_create_input_frame(srcbox);
     gtk_container_add(GTK_CONTAINER(inputFrame), srcbox);
     gtk_table_attach(GTK_TABLE(subtable), inputFrame, 0, 1, 0, 1, GTK_SHRINK,GTK_EXPAND | GTK_FILL, 1, 1);
     
@@ -151,8 +151,8 @@ void initUI(int* argc, char*** argv)
     gtk_table_attach(GTK_TABLE(table), statusbar, 0, 1, 2, 3,  GTK_EXPAND | GTK_FILL, GTK_SHRINK, 0, 0);
     
     gtk_container_add(GTK_CONTAINER(window), table);
-    g_signal_connect(G_OBJECT(window), "delete-event", G_CALLBACK(delete_event), NULL);
-    g_signal_connect(G_OBJECT(window), "destroy", G_CALLBACK(destroy), NULL);
+    g_signal_connect(G_OBJECT(window), "delete-event", G_CALLBACK(ui_action_delete_event), NULL);
+    g_signal_connect(G_OBJECT(window), "destroy", G_CALLBACK(ui_action_destroy), NULL);
     
     GdkScreen* screen = gdk_screen_get_default();
     int width = gdk_screen_get_width(screen);

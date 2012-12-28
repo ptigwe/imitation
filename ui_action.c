@@ -1,8 +1,8 @@
-#include "uiactions.h"
+#include "ui_action.h"
 
 static gboolean delete_parsed = FALSE;
 
-gboolean delete_event(GtkWidget *widget, GdkEvent *event, gpointer data)
+gboolean ui_action_delete_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 {
     /* If you return FALSE in the "delete-event" signal handler,
      * GTK will emit the "destroy" signal. Returning TRUE means
@@ -15,17 +15,17 @@ gboolean delete_event(GtkWidget *widget, GdkEvent *event, gpointer data)
     /* Change TRUE to FALSE and the main window will be destroyed with
      * a "delete-event". */
 
-    return !(delete_parsed = shouldQuit(GTK_WINDOW(widget)));
+    return !(delete_parsed = ui_action_should_quit(GTK_WINDOW(widget)));
 }
 
 /* Another callback */
-void destroy(GtkWidget *widget, gpointer data)
+void ui_action_destroy(GtkWidget *widget, gpointer data)
 {
-    if(delete_parsed || shouldQuit(GTK_WINDOW(widget)))
+    if(delete_parsed || ui_action_should_quit(GTK_WINDOW(widget)))
         gtk_main_quit();
 }
 
-gboolean shouldQuit(GtkWindow *window)
+gboolean ui_action_should_quit(GtkWindow *window)
 {
     GtkWidget* dialog;
     
@@ -45,15 +45,15 @@ gboolean shouldQuit(GtkWindow *window)
     }
 }
 
-void saveData(GtkFileChooser* fchooser, GtkWindow* window)
+void ui_action_save_data(GtkFileChooser* fchooser, GtkWindow* window)
 {
 }
 
-void saveFile(GtkWidget *widget, GtkWindow* window)
+void ui_action_save_file(GtkWidget *widget, GtkWindow* window)
 {
 }
 
-gboolean updateStatusbar(GtkWidget* widget, GdkEventProximity* event, gchar* context)
+gboolean ui_action_update_statusbar(GtkWidget* widget, GdkEventProximity* event, gchar* context)
 {
     gchar* hint;
     guint id = gtk_statusbar_get_context_id(GTK_STATUSBAR(statusbar), context);
@@ -71,7 +71,7 @@ gboolean updateStatusbar(GtkWidget* widget, GdkEventProximity* event, gchar* con
     return FALSE;
 }
 
-void enableCheckBox(GtkWidget* widget, GtkWidget* checkbox)
+void ui_action_enable_checkbox(GtkWidget* widget, GtkWidget* checkbox)
 {
     gboolean val = gtk_widget_get_sensitive(checkbox);
     gtk_widget_set_sensitive(checkbox, !val);
@@ -80,13 +80,13 @@ void enableCheckBox(GtkWidget* widget, GtkWidget* checkbox)
         gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(checkbox), FALSE);
 }
 
-void enableWidget(GtkWidget* widget, GtkWidget* enable)
+void ui_action_enable_widget(GtkWidget* widget, GtkWidget* enable)
 {
     gboolean val = gtk_widget_get_sensitive(enable);
     gtk_widget_set_sensitive(enable, !val);
 }
 
-void showAboutDialog(GtkWidget* widget, gpointer data)
+void ui_action_show_about_dialog(GtkWidget* widget, gpointer data)
 {
     GtkWidget* dialog;
     dialog = gtk_about_dialog_new();
@@ -103,6 +103,6 @@ void showAboutDialog(GtkWidget* widget, gpointer data)
     gtk_widget_destroy(dialog);
 }
 
-void runSimulation(GtkWidget* widget, gpointer data)
+void ui_action_run_simulation(GtkWidget* widget, gpointer data)
 {
 }

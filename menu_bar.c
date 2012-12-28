@@ -1,8 +1,8 @@
-#include "menubar.h"
+#include "menu_bar.h"
 
 #define MENUCONTEXT "menuhint"
 
-GtkWidget* initMenubar(GtkWindow* window, GtkWidget* vbox)
+GtkWidget *menu_bar_init(GtkWindow* window, GtkWidget* vbox)
 {
     GtkWidget *menubar, *filemenu, *file, *open, *save, *about, *close, *separator;
     GtkAccelGroup *group;
@@ -26,16 +26,16 @@ GtkWidget* initMenubar(GtkWindow* window, GtkWidget* vbox)
     gtk_menu_shell_append(GTK_MENU_SHELL(filemenu), about);
     gtk_menu_shell_append(GTK_MENU_SHELL(filemenu), close);
     
-    g_signal_connect(G_OBJECT(save), "enter_notify_event", G_CALLBACK(updateStatusbar), MENUCONTEXT);
-    g_signal_connect(G_OBJECT(save), "leave_notify_event", G_CALLBACK(updateStatusbar), MENUCONTEXT);
-    g_signal_connect(G_OBJECT(about), "enter_notify_event", G_CALLBACK(updateStatusbar), MENUCONTEXT);
-    g_signal_connect(G_OBJECT(about), "leave_notify_event", G_CALLBACK(updateStatusbar), MENUCONTEXT);
-    g_signal_connect(G_OBJECT(close), "enter_notify_event", G_CALLBACK(updateStatusbar), MENUCONTEXT);
-    g_signal_connect(G_OBJECT(close), "leave_notify_event", G_CALLBACK(updateStatusbar), MENUCONTEXT);
+    g_signal_connect(G_OBJECT(save), "enter_notify_event", G_CALLBACK(ui_action_update_statusbar), MENUCONTEXT);
+    g_signal_connect(G_OBJECT(save), "leave_notify_event", G_CALLBACK(ui_action_update_statusbar), MENUCONTEXT);
+    g_signal_connect(G_OBJECT(about), "enter_notify_event", G_CALLBACK(ui_action_update_statusbar), MENUCONTEXT);
+    g_signal_connect(G_OBJECT(about), "leave_notify_event", G_CALLBACK(ui_action_update_statusbar), MENUCONTEXT);
+    g_signal_connect(G_OBJECT(close), "enter_notify_event", G_CALLBACK(ui_action_update_statusbar), MENUCONTEXT);
+    g_signal_connect(G_OBJECT(close), "leave_notify_event", G_CALLBACK(ui_action_update_statusbar), MENUCONTEXT);
     
-    g_signal_connect(G_OBJECT(save), "activate", G_CALLBACK(saveFile), window);
-    g_signal_connect(G_OBJECT(about), "activate", G_CALLBACK(showAboutDialog), NULL);
-    g_signal_connect_swapped(G_OBJECT(close), "activate", G_CALLBACK(destroy), window);
+    g_signal_connect(G_OBJECT(save), "activate", G_CALLBACK(ui_action_save_file), window);
+    g_signal_connect(G_OBJECT(about), "activate", G_CALLBACK(ui_action_show_about_dialog), NULL);
+    g_signal_connect_swapped(G_OBJECT(close), "activate", G_CALLBACK(ui_action_destroy), window);
     
     g_object_set_data(G_OBJECT(save), MENUCONTEXT, (gpointer)"Save the computed data including the source file");
     g_object_set_data(G_OBJECT(about), MENUCONTEXT, (gpointer)"About this application.");

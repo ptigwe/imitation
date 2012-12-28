@@ -3,13 +3,13 @@
 
 #include <gtk/gtk.h>
 #include <glib.h>
-#include "menubar.h"
-#include "uiactions.h"
+#include "menu_bar.h"
+#include "ui_action.h"
 
 extern GtkWidget *window;
 extern GtkWidget *statusbar;
 GtkWidget *dstwidget;
 
-void initUI(int* argc, char*** argv);
+void ui_init(int *argc, char ***argv);
 
 #endif

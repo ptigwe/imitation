@@ -1,9 +1,8 @@
 #include "graph.h"
 
-
-Graph* new_graph(int n)
+graph_t *graph_alloc(int n)
 {
-    Graph *g = (Graph *) g_malloc(sizeof(Graph));
+    graph_t *g = (graph_t *) g_malloc(sizeof(graph_t));
     g->edges = (GSList**) g_malloc(sizeof(GSList*) * n);
     
     int i;
@@ -16,9 +15,9 @@ Graph* new_graph(int n)
     return g;
 }
 
-Graph* new_cycle(int n)
+graph_t *graph_new_cycle(int n)
 {
-    Graph *g = new_graph(n);
+    graph_t *g = graph_alloc(n);
     
     int i;
     for(i = 0; i < n; ++i)
@@ -43,9 +42,9 @@ Graph* new_cycle(int n)
     return g;
 }
 
-Graph* new_complete_graph(int n)
+graph_t *graph_new_complete(int n)
 {
-    Graph *g = new_graph(n);
+    graph_t *g = graph_alloc(n);
     
     int i;
     for(i = 0; i < n; ++i)
@@ -63,9 +62,9 @@ Graph* new_complete_graph(int n)
     return g;
 }
 
-Graph* new_complete_bipartite_graph(int n)
+graph_t *graph_new_complete_bipartite(int n)
 {
-    Graph *g = new_graph(n);
+    graph_t *g = graph_alloc(n);
     
     int i;
     for(i = 0; i < n; ++i)
@@ -80,10 +79,10 @@ Graph* new_complete_bipartite_graph(int n)
     return g;
 }
 
-Graph* new_uniform_tree(int b, int d)
+graph_t *graph_new_uniform_tree(int b, int d)
 {    
     int n = (pow(b, d + 1) - 1) / (b - 1);
-    Graph *g = new_graph(n);
+    graph_t *g = graph_alloc(n);
     int m = (pow(b, d) - 1) / (b - 1);
     
     int i;
@@ -99,9 +98,9 @@ Graph* new_uniform_tree(int b, int d)
     return g;
 }
 
-Graph* new_grid(int m, int n)
+graph_t *graph_new_grid(int m, int n)
 {
-    Graph *g = new_graph(m * n);
+    graph_t *g = graph_alloc(m * n);
     int a;
     for(a = 0; a < m; ++a)
     {
@@ -137,7 +136,31 @@ Graph* new_grid(int m, int n)
     return g;
 }
 
-void free_graph(Graph* g)
+graph_t *graph_new(int graph_type, int p1, int p2)
+{
+    graph_t *graph;
+    switch(graph_type)
+    {
+        case CYCLE_GRAPH:
+            graph = graph_new_cycle(p1);
+            break;
+        case COMPLETE_GRAPH:
+            graph = graph_new_complete(p1);
+            break;
+        case COMPLETE_BIPARTITE_GRAPH:
+            graph = graph_new_complete_bipartite(p1);
+            break;
+        case UNIFORM_TREE:
+            graph = graph_new_uniform_tree(p1, p2);
+            break;
+        case GRID_GRAPH:
+            graph = graph_new_grid(p1, p2);
+            break;
+    }
+    return graph;
+}
+
+void graph_free(graph_t *g)
 {
     int i;
     for(i = 0; i < g->n; ++i)
@@ -148,12 +171,19 @@ void free_graph(Graph* g)
     g_free(g);
 }
 
-GSList* get_neighbours_of(Graph* g, int i)
+GSList *graph_get_neighbours_of(graph_t *g, int i)
 {
     return g->edges[i];
 }
 
-void print_graph(Graph* g)
+int graph_number_of_neighbours_of(graph_t *g, int i)
+{
+    GSList *neighbours = graph_get_neighbours_of(g, i);
+    
+    return g_slist_length(neighbours);
+}
+
+void graph_print(graph_t *g)
 {
     int i;
     for(i = 0; i < g->n; ++i)
