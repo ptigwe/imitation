@@ -89,3 +89,8 @@ gint random_integer_with_probability(mpq_t *p, gint n)
     
     return j;
 }
+
+gint random_integer(int n)
+{
+    return g_random_int_range(0, n);
+}

@@ -16,7 +16,7 @@ typedef struct
 {
     GSList **edges;
     int n;
-    gchar *type;
+    int type;
 }graph_t;
 
 graph_t *graph_new(int graph_type, int p1, int p2);

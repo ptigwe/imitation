@@ -7,5 +7,6 @@
 void random_set_seed(unsigned int seed);
 gboolean random_boolean_with_probability(mpq_t p);
 gint random_integer_with_probability(mpq_t *p, int n);
+gint random_integer(int n);
 
 #endif

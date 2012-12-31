@@ -3,7 +3,7 @@
 graph_t *graph_alloc(int n)
 {
     graph_t *g = (graph_t *) g_malloc(sizeof(graph_t));
-    g->edges = (GSList**) g_malloc(sizeof(GSList*) * n);
+    g->edges = (GSList **) g_malloc(sizeof(GSList *) * n);
     
     int i;
     for(i = 0; i < n; ++i)
