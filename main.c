@@ -4,6 +4,7 @@
 #include <gmp.h>
 #include "random.h"
 #include "game.h"
+#include "experiment.h"
 
 int main(int argc, char** argv)
 {
@@ -68,30 +69,32 @@ int main(int argc, char** argv)
     mpq_t p_c;
     mpq_init(p_c);
     mpq_set_si(p_c, 1, 2);
-    game_t *game = game_new(CYCLE_GRAPH, 10, 1, p_c);
+    game_t *game = game_new(CYCLE_GRAPH, 100, 1, p_c);
+    mpq_set_si(game->s, 8, 10);
+    mpq_set_si(game->t, 2, 1);
     game_set_initial_configuration(game);
+    game_play_t_rounds(game, 1, 1000);
     
     int i = 0;
     int n = game->graph->n;
     for(i = 0; i < n; ++i)
     {
         int j = GPOINTER_TO_INT(g_slist_nth_data(game->graph->edges[i], 0));
-        g_print("%d (%d): %d", i, j, game->initial_config[i]);
-        game_get_payoff_of_player(game, i, p_c);
-        gmp_printf(" -> %Qd", p_c);
+        g_print("%d: %d -> %d\n", i, game->initial_config[i], game->current_config[i]);
         //game_compute_p_i(game, i, 0, p_c);
         //gmp_printf(" -> %Qd\n", p_c);
     }
     g_print("Cooperators: %d\n", game_get_number_of_cooperators(game));
     game_free(game);
-    mpq_clear(p_c);
-    */
+    mpq_clear(p_c);*/
     
+    /*
     mpq_t p_c;
     mpq_init(p_c);
-    mpq_set_si(p_c, 2, 2);
+    mpq_set_si(p_c, 1, 2);
     game_t *game = game_new(COMPLETE_GRAPH, 10, 3, p_c);
-    
+    mpq_set_si(game->s, 1, 2);
+    mpq_set_si(game->t, 1, 5);
     mpq_t *p_ij;
     p_ij = (mpq_t *)malloc(sizeof(mpq_t) * game->graph->n);
     int n = game->graph->n;
@@ -103,7 +106,7 @@ int main(int argc, char** argv)
     }
     
     game_set_initial_configuration(game);
-    game_play_t_rounds(game, 2, 100);
+    game_play_t_rounds(game, 2, 3);
     
     for(i = 0; i < n; ++i)
     {
@@ -117,7 +120,17 @@ int main(int argc, char** argv)
     {
         mpq_clear(p_ij[i]);
     }
-    mpq_clear(p_c);
+    mpq_clear(p_c);*/
+    
+    ExperimentFlags flags;
+    flags.update_rule = 2;
+    flags.percentage = 20;
+    flags.generations = 10;
+    flags.repititions = 1;
+    flags.graph_type = COMPLETE_GRAPH;
+    flags.graph_parameter_1 = 100;
+    flags.increments = 10;
+    experiment_run_simulation(flags);
     
     //ui_init(&argc, &argv);
     
