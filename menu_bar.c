@@ -4,7 +4,7 @@
 
 GtkWidget *menu_bar_init(GtkWindow* window, GtkWidget* vbox)
 {
-    GtkWidget *menubar, *filemenu, *file, *open, *save, *about, *close, *separator;
+    GtkWidget *menubar, *filemenu, *file, *save, *about, *close, *separator;
     GtkAccelGroup *group;
     
     group = gtk_accel_group_new();
@@ -20,7 +20,6 @@ GtkWidget *menu_bar_init(GtkWindow* window, GtkWidget* vbox)
     about = gtk_image_menu_item_new_from_stock(GTK_STOCK_ABOUT, group);
     close = gtk_image_menu_item_new_from_stock(GTK_STOCK_CLOSE, group);
     
-    gtk_menu_shell_append(GTK_MENU_SHELL(filemenu), open);
     gtk_menu_shell_append(GTK_MENU_SHELL(filemenu), save);
     gtk_menu_shell_append(GTK_MENU_SHELL(filemenu), separator);
     gtk_menu_shell_append(GTK_MENU_SHELL(filemenu), about);

@@ -5,6 +5,15 @@
 #include "random.h"
 #include "game.h"
 #include "experiment.h"
+#include <getopt.h>
+
+void usage()
+{
+    g_print("usage: simulator [-g] [-G graph type] [-a graph parameter 1] [-b graph parameter 1]\n");
+    g_print("                 [-h] [-i increments] [-p percentage] [-r repititions] [-t time] \n");
+    g_print("                 [-u update rule] [-v]\n");
+    exit(0);
+}
 
 int main(int argc, char** argv)
 {
@@ -123,16 +132,67 @@ int main(int argc, char** argv)
     mpq_clear(p_c);*/
     
     ExperimentFlags flags;
-    flags.update_rule = 2;
-    flags.percentage = 20;
-    flags.generations = 10;
-    flags.repititions = 1;
-    flags.graph_type = COMPLETE_GRAPH;
-    flags.graph_parameter_1 = 100;
-    flags.increments = 10;
-    experiment_run_simulation(flags);
+    flags.update_rule = -1;
+    flags.percentage = -1;
+    flags.generations = -1;
+    flags.repititions = -1;
+    flags.graph_type = -1;
+    flags.graph_parameter_1 = -1;
+    flags.increments = -1;
     
-    //ui_init(&argc, &argv);
+    int c;
+    while ((c = getopt (argc, argv, "a:b:gG:hi:p:r:t:u:v")) != -1)
+    {
+        switch(c)
+        {
+            case 'a':
+                flags.graph_parameter_1 = atoi(optarg);
+                break;
+            case 'b':
+                flags.graph_parameter_2 = atoi(optarg);
+                break;
+            case 'g':
+                flags.gui = 1;
+                break;
+            case 'G':
+                flags.graph_type = atoi(optarg);
+                break;
+            case 'h':
+                usage();
+            case 'i':
+                flags.increments = atoi(optarg);
+                break;
+            case 'p':
+                flags.percentage = atoi(optarg);
+                break;
+            case 'r':
+                flags.repititions = atoi(optarg);
+                break;
+            case 't':
+                flags.generations = atoi(optarg);
+                break;
+            case 'u':
+                flags.update_rule = atoi(optarg);
+                break;
+            case 'v':
+                flags.verbose = 1;
+                break;
+            case '?':
+                usage();
+                break;
+            default:
+                abort();
+        }
+    }
+    
+    if(flags.gui)
+    {
+        ui_init(&argc, &argv);
+    }
+    else
+    {
+        experiment_run_simulation(flags);
+    }
     
     return 0;
 }
