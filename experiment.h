@@ -1,5 +1,8 @@
 #include <glib.h>
 #include <gmp.h>
+#include <cv.h>
+#include <highgui.h>
+#include "colourmap.h"
 #include "game.h"
 
 #ifndef EXPERIMENT_H
@@ -20,6 +23,6 @@ typedef struct
 }ExperimentFlags;
 
 void experiment_run_simulation1(ExperimentFlags flags, game_t *game, double **results);
-void experiment_run_simulation(ExperimentFlags flags);
+void experiment_run_simulation(ExperimentFlags flags, IplImage *result_img);
 
 #endif

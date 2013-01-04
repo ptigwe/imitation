@@ -1,5 +1,35 @@
 #include "experiment.h"
 
+void experiment_result_to_image(double **results, int n, IplImage *dst)
+{
+    double spacing = dst->height / n;
+    
+    int s;
+    for(s = 0; s < n; ++s)
+    {    
+        double s_i = ((double) s) / ((double) n);
+        double y1 = dst->height - (s_i * dst->height);
+        double y2 = y1 - spacing;
+        int t;
+        for(t = 0; t < n; ++t)
+        {
+            double c = results[s][t];
+            CvScalar colour = colourmap_gray_to_rgb(c);
+            double t_i = ((double) t) / ((double) n);
+            
+            double x1 = (t_i * dst->width);
+            double x2 = x1 + spacing;
+            
+            CvPoint p1 = cvPoint(x1, y1);
+            CvPoint p2 = cvPoint(x2, y2);
+
+            //printf("%.3f -> %.1f  %.1f, %.1f\n", c, colour.val[0], colour.val[1], colour.val[2]);
+            //printf("%.1f, %.1f -> %.1f, %.1f\n", x1, y1, x2, y2);
+            cvRectangle(dst, p1, p2, colour, CV_FILLED, 8, 0);
+        }
+    }
+}
+
 void experiment_run_simulation1(ExperimentFlags flags, game_t *game, double **results)
 {
     int s_inc, t_inc;
@@ -41,7 +71,7 @@ void experiment_run_simulation1(ExperimentFlags flags, game_t *game, double **re
     mpq_clears(s, t, tmp, sum, NULL);
 }
 
-void experiment_run_simulation(ExperimentFlags flags)
+void experiment_run_simulation(ExperimentFlags flags, IplImage *result_img)
 {
     double **results;
     int n = 2 * flags.increments;
@@ -82,6 +112,8 @@ void experiment_run_simulation(ExperimentFlags flags)
         }
         gmp_printf("\n");
     }
+    
+    experiment_result_to_image(results, n + 1, result_img);
     
     for(i = 0; i <= n; ++i)
     {

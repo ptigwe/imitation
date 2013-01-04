@@ -1,3 +1,6 @@
+
+#include <cv.h>
+#include <highgui.h>
 #include "ui.h"
 #include "graph.h"
 #include <glib.h>
@@ -5,6 +8,7 @@
 #include "random.h"
 #include "game.h"
 #include "experiment.h"
+#include "colourmap.h"
 #include <getopt.h>
 
 void usage()
@@ -13,6 +17,28 @@ void usage()
     g_print("                 [-h] [-i increments] [-p percentage] [-r repititions] [-t time] \n");
     g_print("                 [-u update rule] [-v]\n");
     exit(0);
+}
+
+void draw_colour_bar(IplImage *img, int steps)
+{
+    int height = img->height / steps;
+    
+    int i;
+    double x1 = 0;
+    double x2 = img->width;
+    for(i = 0; i <= steps; ++i)
+    {    
+        double c = ((double)i) / ((double) steps);
+        double y1 = img->height - (c * img->height);
+        double y2 = y1 - height;
+        
+        CvPoint p1 = cvPoint(x1, y1);
+        CvPoint p2 = cvPoint(x2, y2);
+        
+        CvScalar color = colourmap_gray_to_rgb(c);
+        printf("%.3f -> %.1f  %.1f, %.1f\n", c, color.val[0], color.val[1], color.val[2]);
+        cvRectangle(img, p1, p2, color, CV_FILLED, 8, 0);
+    }
 }
 
 int main(int argc, char** argv)
@@ -139,6 +165,7 @@ int main(int argc, char** argv)
     flags.graph_type = -1;
     flags.graph_parameter_1 = -1;
     flags.increments = -1;
+    flags.gui = FALSE;
     
     int c;
     while ((c = getopt (argc, argv, "a:b:gG:hi:p:r:t:u:v")) != -1)
@@ -191,7 +218,16 @@ int main(int argc, char** argv)
     }
     else
     {
-        experiment_run_simulation(flags);
+        
+        IplImage *img = cvCreateImage(cvSize(400, 400), IPL_DEPTH_64F, 3);
+        cvZero(img);
+        //draw_colour_bar(img, 1000);
+        
+        experiment_run_simulation(flags, img);
+        
+        cvShowImage("Result", img);
+        cvWaitKey(0);
+        cvReleaseImage(&img);
     }
     
     return 0;
