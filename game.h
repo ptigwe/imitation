@@ -16,6 +16,10 @@
 #define COOPERATE 1
 #define DEFECT 0
 
+#define ALL_COOPERATE_STATE 1
+#define ALL_DEFECT_STATE 2
+#define MIXED_STATE 3
+
 #define PROPORTIONAL_RULE 1
 #define MOD_PROPORTIONAL_RULE 2
 typedef struct
@@ -46,6 +50,6 @@ void game_update_with_proportional_imitate(game_t *game);
 void game_update_with_mod_proportional_imitate(game_t *game);
 void game_play_round(game_t *game, int rule);
 void game_play_t_rounds(game_t *game, int rule, int t);
-gboolean game_is_in_steady_state(game_t *game);
+int game_is_in_steady_state(game_t *game);
 
 #endif

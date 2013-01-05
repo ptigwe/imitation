@@ -337,7 +337,46 @@ void game_play_t_rounds(game_t *game, int rule, int t)
     }
 }
 
-gboolean game_is_in_steady_state(game_t *game)
+int game_is_in_steady_state(game_t *game)
 {
-    return FALSE;
+    int state = 0;
+    int n = game->graph->n;
+    mpq_t tmp;
+    mpq_t m;
+    mpq_inits(m, tmp, NULL);
+    
+    gboolean s = TRUE;
+    game_get_payoff_of_player(game, 0, m);
+    
+    int i;
+    for(i = 1; i < n; ++i)
+    {
+        game_get_payoff_of_player(game, i, tmp);
+        
+        if(mpq_cmp(tmp, m) != 0)
+        {
+            s = FALSE;
+            break;
+        }
+    }
+    
+    if(s)
+    {
+        int coop = game_get_number_of_cooperators(game);
+        if(coop == 0)
+        {
+            state = ALL_DEFECT_STATE;
+        }
+        else if(coop == n)
+        {
+            state = ALL_COOPERATE_STATE;
+        }
+        else
+        {
+            state = MIXED_STATE;
+        }
+    }
+    
+    mpq_clears(m, tmp, NULL);
+    return state;
 }

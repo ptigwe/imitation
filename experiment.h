@@ -4,6 +4,7 @@
 #include <highgui.h>
 #include "colourmap.h"
 #include "game.h"
+#include "result.h"
 
 #ifndef EXPERIMENT_H
 #define EXPERIMENT_H
@@ -22,7 +23,7 @@ typedef struct
     int verbose;
 }ExperimentFlags;
 
-void experiment_run_simulation1(ExperimentFlags flags, game_t *game, double **results);
-void experiment_run_simulation(ExperimentFlags flags, IplImage *result_img);
+void experiment_run_simulation1(ExperimentFlags flags, game_t *game, result_t *result);
+void experiment_run_simulation(ExperimentFlags flags, IplImage *result_img, IplImage *coop_img, IplImage *def_img, IplImage *mix_img);
 
 #endif

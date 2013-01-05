@@ -103,11 +103,12 @@ int main(int argc, char** argv)
     /*
     mpq_t p_c;
     mpq_init(p_c);
-    mpq_set_si(p_c, 1, 2);
+    mpq_set_si(p_c, 50, 100);
     game_t *game = game_new(CYCLE_GRAPH, 100, 1, p_c);
-    mpq_set_si(game->s, 8, 10);
-    mpq_set_si(game->t, 2, 1);
+    mpq_set_si(game->s, 4, 10);
+    mpq_set_si(game->t, 1, 5);
     game_set_initial_configuration(game);
+    g_print("Cooperators: %d\n", game_get_number_of_cooperators(game));
     game_play_t_rounds(game, 1, 1000);
     
     int i = 0;
@@ -115,9 +116,8 @@ int main(int argc, char** argv)
     for(i = 0; i < n; ++i)
     {
         int j = GPOINTER_TO_INT(g_slist_nth_data(game->graph->edges[i], 0));
-        g_print("%d: %d -> %d\n", i, game->initial_config[i], game->current_config[i]);
+        g_print("%d: %d -> %d (%d)\n", i, game->initial_config[i], game->current_config[i], game_is_in_steady_state(game));
         //game_compute_p_i(game, i, 0, p_c);
-        //gmp_printf(" -> %Qd\n", p_c);
     }
     g_print("Cooperators: %d\n", game_get_number_of_cooperators(game));
     game_free(game);
@@ -219,15 +219,27 @@ int main(int argc, char** argv)
     else
     {
         
-        IplImage *img = cvCreateImage(cvSize(400, 400), IPL_DEPTH_64F, 3);
-        cvZero(img);
+        IplImage *res_img = cvCreateImage(cvSize(400, 400), IPL_DEPTH_64F, 3);
+        IplImage *coop_img = cvCreateImage(cvSize(400, 400), IPL_DEPTH_64F, 3);
+        IplImage *def_img = cvCreateImage(cvSize(400, 400), IPL_DEPTH_64F, 3);
+        IplImage *mix_img = cvCreateImage(cvSize(400, 400), IPL_DEPTH_64F, 3);
+        cvZero(res_img);
+        cvZero(coop_img);
+        cvZero(def_img);
+        cvZero(mix_img);
         //draw_colour_bar(img, 1000);
         
-        experiment_run_simulation(flags, img);
+        experiment_run_simulation(flags, res_img, coop_img, def_img, mix_img);
         
-        cvShowImage("Result", img);
+        cvShowImage("Result", res_img);
+        cvShowImage("Cooperators", coop_img);
+        cvShowImage("Defectors", def_img);
+        cvShowImage("Mixed", mix_img);
         cvWaitKey(0);
-        cvReleaseImage(&img);
+        cvReleaseImage(&res_img);
+        cvReleaseImage(&coop_img);
+        cvReleaseImage(&def_img);
+        cvReleaseImage(&mix_img);
     }
     
     return 0;
