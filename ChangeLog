@@ -1,0 +1,64 @@
+2013-01-04 Tobenna Peter, Igwe <ptigwe@gmail.com>
+
+	* experiment.c (experiment_run_simulation,experiment_run_simulation1): 
+	  Amended code for generation of extended results.
+	* experiment.c (experiment_result_to_image): Removed Function.
+	
+	* game.c (game_is_in_steady_state): Fixed code to determine which state the
+	  game is in.
+	
+	* main.c (main) : Added code to display the extended results.
+	
+	* result.c : New File. Added an extended representation of the results.
+	
+	* result.h : New File.
+
+2013-01-03 Tobenna Peter, Igwe <ptigwe@gmail.com>	
+	
+	* colourmap.c : New File. Added functions for mapping a number in the range 0 - 1
+	  inclusive to a colour.
+
+	* colourmap.h : New File.
+
+	* experiment.c (experiment_result_to_image) : New Function.
+	* experiment.c (experiment_result_to_image, experiment_run_simulation) : Added
+	  functionality for converting the results into an image.
+	
+	* experiment.h (ExperimentFlags) : Added two extra flags for UI and verbose output.
+	
+	* main.c (main, usage) : Added the use of argument flags using "getopt.h".
+	* main.c (main) : Added code for displaying results of the experiments as an image.
+	
+	* menu_bar.c (menu_bar_init) : Removed addition of a NULL element to the menubar.
+
+2013-01-01 Tobenna Peter, Igwe <ptigwe@gmail.com>	
+	
+	* experiment.c : New File. Added necessary functions for running the simulations.
+
+	* experiment.h : New File.
+	
+	* main.c (main) : Added code for testing the running of the simulation.
+
+2012-12-31 Tobenna Peter, Igwe <ptigwe@gmail.com>	
+	
+	* game.c : New file. Added necessary functions for computation of games.
+
+	* game.h : New file.
+	
+	* main.c (main) : Added code for testing the game functions used for computation.
+	
+	* random.c (random_integer): New Function. Added computation of uniformly
+	  distributed random numbers.
+
+2012-12-27 Tobenna Peter, Igwe <ptigwe@gmail.com>
+
+	* random.c (random_boolean_with_probability): Fixed generation of random booleans
+
+2012-12-22 Tobenna Peter, Igwe <ptigwe@gmail.com>
+
+	* Makefile: Added the GNUMP library for computing rational numbers
+	
+	* main.c (main): Added code for testing the computation of random integers
+	  and random booleans.
+	
+	* random.c : New File. Added necessary functions for computing random numbers.
