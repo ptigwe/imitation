@@ -38,6 +38,8 @@ void game_free(game_t *game)
     g_free(game->initial_config);
     g_free(game->current_config);
     g_free(game->next_config);
+    
+    g_free(game);
 }
 
 void game_set_initial_configuration(game_t *game)
@@ -264,6 +266,7 @@ void game_update_with_proportional_imitate(game_t *game)
         {
             game->next_config[i] = game->current_config[i];
         }
+        mpq_clear(p_i);
     }
     
     for(i = 0; i < n; ++i)

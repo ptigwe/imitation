@@ -1,3 +1,18 @@
+2013-01-23 Tobenna Peter, Igwe <ptigwe@gmail.com>
+
+	* experiment.c (experiment_validate_flags) : New Function. Added functionality
+	  for validating flags.
+	
+	* game.c (game_update_with_proportional_imitate) : Fixed memory leak
+	* game.c (game_free) : Fixed memory leak
+	
+	* main.c (main) : Added verification of flags
+	
+	* result.c (result_draw_legend) : New Function.
+	* result.c (result_draw_grid) : New Function.
+	* result.c (result_to_image, result_draw_legend, result_draw_grid) : Added 
+	  functionality for drawing the grid and the legend of the graph.
+	
 2013-01-04 Tobenna Peter, Igwe <ptigwe@gmail.com>
 
 	* experiment.c (experiment_run_simulation,experiment_run_simulation1): 

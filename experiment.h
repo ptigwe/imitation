@@ -23,6 +23,7 @@ typedef struct
     int verbose;
 }ExperimentFlags;
 
+gboolean experiment_validate_flags(ExperimentFlags flags);
 void experiment_run_simulation1(ExperimentFlags flags, game_t *game, result_t *result);
 void experiment_run_simulation(ExperimentFlags flags, IplImage *result_img, IplImage *coop_img, IplImage *def_img, IplImage *mix_img);
 

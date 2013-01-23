@@ -9,6 +9,7 @@
 #include "game.h"
 #include "experiment.h"
 #include "colourmap.h"
+#include "result.h"
 #include <getopt.h>
 
 void usage()
@@ -167,6 +168,8 @@ int main(int argc, char** argv)
     flags.increments = -1;
     flags.gui = FALSE;
     
+    int args = 0;
+    
     int c;
     while ((c = getopt (argc, argv, "a:b:gG:hi:p:r:t:u:v")) != -1)
     {
@@ -210,6 +213,12 @@ int main(int argc, char** argv)
             default:
                 abort();
         }
+        ++args;
+    }
+    
+    if(args == 0)
+    {
+        usage();
     }
     
     if(flags.gui)
@@ -218,23 +227,29 @@ int main(int argc, char** argv)
     }
     else
     {
+        if(!experiment_validate_flags(flags))
+            exit(1);
         
-        IplImage *res_img = cvCreateImage(cvSize(400, 400), IPL_DEPTH_64F, 3);
-        IplImage *coop_img = cvCreateImage(cvSize(400, 400), IPL_DEPTH_64F, 3);
-        IplImage *def_img = cvCreateImage(cvSize(400, 400), IPL_DEPTH_64F, 3);
-        IplImage *mix_img = cvCreateImage(cvSize(400, 400), IPL_DEPTH_64F, 3);
-        cvZero(res_img);
-        cvZero(coop_img);
-        cvZero(def_img);
-        cvZero(mix_img);
+        double whratio = (double) 250/165;
+        double height = 400;
+        int width = height * whratio;
+        height += (2 * Y_OFFSET);
+        width += (X_OFFSET1 + X_OFFSET2);
+        CvSize size = cvSize(width, height);
+        IplImage *res_img = cvCreateImage(size, IPL_DEPTH_64F, 3);
+        cvRectangle(res_img, cvPoint(0, 0), cvPoint(width, height), CV_RGB(1, 1, 1), CV_FILLED, 8, 0);
+        IplImage *coop_img = cvCloneImage(res_img);
+        IplImage *def_img = cvCloneImage(res_img);
+        IplImage *mix_img = cvCloneImage(res_img);
         //draw_colour_bar(img, 1000);
         
         experiment_run_simulation(flags, res_img, coop_img, def_img, mix_img);
         
-        cvShowImage("Result", res_img);
         cvShowImage("Cooperators", coop_img);
         cvShowImage("Defectors", def_img);
         cvShowImage("Mixed", mix_img);
+        cvShowImage("Result", res_img);
+        g_print("width - %f, height - %f\n", width, height);
         cvWaitKey(0);
         cvReleaseImage(&res_img);
         cvReleaseImage(&coop_img);

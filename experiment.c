@@ -1,5 +1,54 @@
 #include "experiment.h"
 
+gboolean experiment_validate_flags(ExperimentFlags flags)
+{
+    if(flags.generations <= 0)
+    {
+        return FALSE;
+    }
+    
+    if(flags.repititions <= 0)
+    {
+        return FALSE;
+    }
+    
+    if(flags.update_rule != PROPORTIONAL_RULE && flags.update_rule != MOD_PROPORTIONAL_RULE)
+    {
+        return FALSE;
+    }
+    
+    if(flags.increments <= 0)
+    {
+        return FALSE;
+    }
+    
+    if(flags.percentage < 0)
+    {
+        return FALSE;
+    }
+    
+    if(flags.graph_type < 0 || flags.graph_type > 4)
+    {
+        return FALSE;
+    }
+    
+    if(flags.graph_parameter_1 <= 0)
+    {
+        return FALSE;
+    }
+    
+    if(flags.graph_type == UNIFORM_TREE && flags.graph_parameter_2 <= 0)
+    {
+        return FALSE;
+    }
+    
+    if(flags.graph_type == GRID_GRAPH && flags.graph_parameter_2 <= 0)
+    {
+        return FALSE;
+    }
+    
+    return TRUE;
+}
 
 void experiment_run_simulation1(ExperimentFlags flags, game_t *game, result_t *result)
 {

@@ -6,6 +6,11 @@
 #ifndef RESULT_H
 #define RESULT_H
 
+#define X_OFFSET1 60
+#define X_OFFSET2 90
+#define Y_OFFSET 30
+#define FONT_SCALE 0.5
+
 typedef struct
 {
     double **result;
