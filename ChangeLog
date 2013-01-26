@@ -1,3 +1,7 @@
+2013-01-26 Tobenna Peter, Igwe <ptigwe@gmail.com>
+
+	* All .c, .h and Makefile: Moved into the src directory
+	
 2013-01-23 Tobenna Peter, Igwe <ptigwe@gmail.com>
 
 	* experiment.c (experiment_validate_flags) : New Function. Added functionality
