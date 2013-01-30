@@ -1,3 +1,11 @@
+2013-01-30 Tobenna Peter, Igwe <ptigwe@gmail.com>
+
+	* tests/random/random_integer_test.c : New file. Testing random integers.
+	
+	* tests/random/random_boolean_test.c : New file. Testing random booleans.
+	
+	* tests/random/Makefile :New file.
+
 2013-01-26 Tobenna Peter, Igwe <ptigwe@gmail.com>
 
 	* All .c, .h and Makefile: Moved into the src directory
