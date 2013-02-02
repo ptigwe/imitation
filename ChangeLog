@@ -1,8 +1,19 @@
+2013-02-02 Tobenna Peter, Igwe <ptigwe@gmail.com>
+
+	* tests/random/random_boolean_test.c : Increased the value of N for the tests
+	* tests/random/random_boolean_test.c (random_boolean_test_generate) : Fixed 
+	  the for loop.
+	
+	* tests/random/random_integer_test.c : Increased the value of N, and reduced
+	  the number of integers in the range.
+	* tests/random/random_integer_test.c (random_integer_test_*) : Changed testing
+	  to 10% increments between consecutive test cases.
+
 2013-01-30 Tobenna Peter, Igwe <ptigwe@gmail.com>
 
-	* tests/random/random_integer_test.c : New file. Testing random integers.
-	
 	* tests/random/random_boolean_test.c : New file. Testing random booleans.
+	
+	* tests/random/random_integer_test.c : New file. Testing random integers.
 	
 	* tests/random/Makefile :New file.
 

@@ -5,14 +5,14 @@
 
 #define IN_RANGE(x, y, z) ((x >= y) && (x <= z))
 #define IN_RANGE_WITH_ERROR(x, y, z) ((x >= (y - (y * z))) && (x <= (y + (y * z))))
-#define THRESHOLD 0.15
-#define N 10000
+#define THRESHOLD 0.01
+#define N 1000000
 
 gint random_boolean_test_generate(mpq_t p, int n)
 {
     int count = 0;
     int i;
-    for(i = 0; i < 10000; ++i)
+    for(i = 0; i < n; ++i)
     {
         int b = random_boolean_with_probability(p);
         count += b;

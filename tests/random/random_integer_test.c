@@ -5,13 +5,12 @@
 
 #define IN_RANGE(x, y, z) ((x >= y) && (x <= z))
 #define IN_RANGE_WITH_ERROR(x, y, z) ((x >= (y - (y * z))) && (x <= (y + (y * z))))
-#define THRESHOLD 0.2
-#define N 100000
-#define NUM 50
+#define THRESHOLD 0.02
+#define N 1000000
+#define NUM 10
 
 static void random_integer_test(int i)
 {
-    i -= 1;
     mpq_t *p = (mpq_t *)g_malloc(NUM * sizeof(mpq_t));
     int *c = (int *)g_malloc(NUM * sizeof(int));
     int *expt_res = (int *)g_malloc(NUM * sizeof(int));
@@ -58,57 +57,57 @@ static void random_integer_test(int i)
 
 static void random_integer_test_0()
 {
-    random_integer_test(1);
+    random_integer_test(0);
 }
 
 static void random_integer_test_1()
 {
-    random_integer_test(5);
+    random_integer_test(NUM * 0.1);
 }
 
 static void random_integer_test_2()
 {
-    random_integer_test(10);
+    random_integer_test(NUM * 0.2);
 }
 
 static void random_integer_test_3()
 {
-    random_integer_test(15);
+    random_integer_test(NUM * 0.3);
 }
 
 static void random_integer_test_4()
 {
-    random_integer_test(20);
+    random_integer_test(NUM * 0.4);
 }
 
 static void random_integer_test_5()
 {
-    random_integer_test(25);
+    random_integer_test(NUM * 0.5);
 }
 
 static void random_integer_test_6()
 {
-    random_integer_test(30);
+    random_integer_test(NUM * 0.6);
 }
 
 static void random_integer_test_7()
 {
-    random_integer_test(35);
+    random_integer_test(NUM * 0.7);
 }
 
 static void random_integer_test_8()
 {
-    random_integer_test(40);
+    random_integer_test(NUM * 0.8);
 }
 
 static void random_integer_test_9()
 {
-    random_integer_test(45);
+    random_integer_test(NUM * 0.9);
 }
 
 static void random_integer_test_10()
 {
-    random_integer_test(50);
+    random_integer_test(NUM - 1);
 }
 
 int main(int argc, char **argv)
