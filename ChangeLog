@@ -1,3 +1,21 @@
+2013-02-03 Tobenna Peter, Igwe <ptigwe@gmail.com>
+	
+	* src/graph.c (graph_new_grid) : Removed a printf statement
+	
+	* tests/graph/bipartite_graph_test.c : New file. Testing bipartite graphs.
+	
+	* tests/graph/complete_graph_test.c : New file. Testing complete graphs.
+	
+	* tests/graph/cycle_graph_test.c : New file. Testing cycle graphs.
+	
+	* tests/graph/grid_graph_test.c : New file. Testing grid graphs.
+	
+	* tests/graph/Makefile : New file.
+	
+	* tests/graph/uniform_tree_test.c : New file. Testing uniform trees.
+	
+	* tests/random/random_integer_test.c (main) : Changed the title of the test cases
+	
 2013-02-02 Tobenna Peter, Igwe <ptigwe@gmail.com>
 
 	* tests/random/random_boolean_test.c : Increased the value of N for the tests

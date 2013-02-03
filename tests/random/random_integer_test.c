@@ -113,16 +113,16 @@ static void random_integer_test_10()
 int main(int argc, char **argv)
 {
     g_test_init(&argc, &argv, NULL);
-    g_test_add_func("/Random Boolean Test 1 (p = 0/10)", random_integer_test_0);
-    g_test_add_func("/Random Boolean Test 2 (p = 1/10)", random_integer_test_1);
-    g_test_add_func("/Random Boolean Test 3 (p = 2/10)", random_integer_test_2);
-    g_test_add_func("/Random Boolean Test 4 (p = 3/10)", random_integer_test_3);
-    g_test_add_func("/Random Boolean Test 5 (p = 4/10)", random_integer_test_4);
-    g_test_add_func("/Random Boolean Test 6 (p = 5/10)", random_integer_test_5);
-    g_test_add_func("/Random Boolean Test 7 (p = 6/10)", random_integer_test_6);
-    g_test_add_func("/Random Boolean Test 8 (p = 7/10)", random_integer_test_7);
-    g_test_add_func("/Random Boolean Test 9 (p = 8/10)", random_integer_test_8);
-    g_test_add_func("/Random Boolean Test 10 (p = 9/10)", random_integer_test_9);
-    g_test_add_func("/Random Boolean Test 11 (p = 10/10)", random_integer_test_10);
+    g_test_add_func("/Random Integer Test 1", random_integer_test_0);
+    g_test_add_func("/Random Integer Test 2", random_integer_test_1);
+    g_test_add_func("/Random Integer Test 3", random_integer_test_2);
+    g_test_add_func("/Random Integer Test 4", random_integer_test_3);
+    g_test_add_func("/Random Integer Test 5", random_integer_test_4);
+    g_test_add_func("/Random Integer Test 6", random_integer_test_5);
+    g_test_add_func("/Random Integer Test 7", random_integer_test_6);
+    g_test_add_func("/Random Integer Test 8", random_integer_test_7);
+    g_test_add_func("/Random Integer Test 9", random_integer_test_8);
+    g_test_add_func("/Random Integer Test 10", random_integer_test_9);
+    g_test_add_func("/Random Integer Test 11", random_integer_test_10);
     return g_test_run();
 }

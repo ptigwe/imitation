@@ -108,7 +108,6 @@ graph_t *graph_new_grid(int m, int n)
         for(b = 0; b < n; ++b)
         {
             int i = (a * n) + b;
-            printf("i=%d\n", i);
             int j;
             
             if(a > 0)
