@@ -166,6 +166,7 @@ int main(int argc, char** argv)
     flags.graph_type = -1;
     flags.graph_parameter_1 = -1;
     flags.increments = -1;
+    flags.verbose = 0;
     flags.gui = FALSE;
     
     int args = 0;
@@ -249,7 +250,7 @@ int main(int argc, char** argv)
         cvShowImage("Defectors", def_img);
         cvShowImage("Mixed", mix_img);
         cvShowImage("Result", res_img);
-        g_print("width - %f, height - %f\n", width, height);
+        //g_print("width - %f, height - %f\n", width, height);
         cvWaitKey(0);
         cvReleaseImage(&res_img);
         cvReleaseImage(&coop_img);

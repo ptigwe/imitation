@@ -130,7 +130,7 @@ void result_draw_grid(IplImage* dst)
         CvPoint p2 = cvPoint(x, y2);
         
         cvLine(dst, p1, p2, CV_RGB(0, 0, 0), 1, 8, 0);
-        printf("Grid x - %f\n", t);
+        //printf("Grid x - %f\n", t);
         
         gchar str[4];
         g_sprintf(str, "%.1f", t);
@@ -151,7 +151,7 @@ void result_draw_grid(IplImage* dst)
         CvPoint p2 = cvPoint(x2, y);
         
         cvLine(dst, p1, p2, CV_RGB(0, 0, 0), 1, 8, 0);
-        printf("Grid y - %f\n", t);
+        //printf("Grid y - %f\n", t);
         
         gchar str[4];
         g_sprintf(str, "%.1f", t);

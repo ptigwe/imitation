@@ -62,6 +62,9 @@ void experiment_run_simulation1(ExperimentFlags flags, game_t *game, result_t *r
     mpq_set_si(s, S_MIN, 1);
     mpq_set_si(t, T_MIN, 1);
     
+    int completed = 0;
+    int total_games = pow((2 * flags.increments) + 1, 2);
+    
     for(s_inc = 0; s_inc <= 2 * flags.increments; ++s_inc)
     {
         mpq_set(game->s, s);
@@ -93,8 +96,17 @@ void experiment_run_simulation1(ExperimentFlags flags, game_t *game, result_t *r
                     break;
             }
             
-            gmp_printf("%Qd, %Qd -> %d \n", s, t, game_get_number_of_cooperators(game));
+            ++completed;
             
+            if(flags.verbose)
+            {
+                gmp_printf("%Qd, %Qd -> %d \n", s, t, game_get_number_of_cooperators(game));
+            }
+            else
+            {
+                double per = (((double) completed) / total_games) * 100;
+                g_print("\r%.1f %% games completed.", per);
+            }
             //mpq_add(sum, results[s_inc][t_inc], tmp);
             //mpq_set(results[s_inc][t_inc], sum);
             
@@ -114,7 +126,7 @@ void experiment_run_simulation(ExperimentFlags flags, IplImage *result_img, IplI
     int n = 2 * flags.increments;
     result_t *result = result_new(n + 1);
     
-    printf("n = %d\n", n);
+    //printf("n = %d\n", n);
     /*
     results = (double **)g_malloc(sizeof(double *) * (n + 1));
     int i;
@@ -138,7 +150,11 @@ void experiment_run_simulation(ExperimentFlags flags, IplImage *result_img, IplI
     
     int i;
     for(i = 0; i < flags.repititions; ++i)
-    {
+    {    
+        if(!flags.verbose)
+        {
+            g_print("\nExperiment %d / %d: \n", i + 1, flags.repititions);
+        }
         game_set_initial_configuration(game);
         experiment_run_simulation1(flags, game, result);
     }
@@ -152,9 +168,14 @@ void experiment_run_simulation(ExperimentFlags flags, IplImage *result_img, IplI
             result->cooperate[i][j] /= flags.repititions;
             result->defect[i][j] /= flags.repititions;
             result->mixed[i][j] /= flags.repititions;
-            g_print("%.3f ", result->result[i][j]);
+            
+            if(flags.verbose)
+            {
+                g_print("%.3f ", result->result[i][j]);
+            }
         }
-        gmp_printf("\n");
+        if(flags.verbose)
+            gmp_printf("\n");
     }
     
     result_to_image(result, result_img, coop_img, def_img, mix_img);

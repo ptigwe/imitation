@@ -1,10 +1,18 @@
+2013-03-01 Tobenna Peter, Igwe <ptigwe@gmail.com>
+	
+	* src/experiment.c : Added functionality for the verbose flag
+	
+	* src/main.c : Added functionality for the verbose flag
+	
+	* src/result.c: Added functionality for the verbose flag
+	
 2013-02-08 Tobenna Peter, Igwe <ptigwe@gmail.com>
 
-	* src/game/game_p_i_test.c : New File. Testing probability values p_i.
+	* tests/game/game_p_i_test.c : New File. Testing probability values p_i.
 	
-	* src/game/game_payoff_test.c : New File. Testing payoff values.
+	* tests/game/game_payoff_test.c : New File. Testing payoff values.
 	
-	* src/game/Makefile : New File.
+	* tests/game/Makefile : New File.
 
 2013-02-03 Tobenna Peter, Igwe <ptigwe@gmail.com>
 	
