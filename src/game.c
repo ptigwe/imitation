@@ -140,7 +140,8 @@ void game_get_alpha(game_t *game, mpq_t alpha)
     mpq_t max_t_1;
     mpq_t min_s_0;
     
-    mpq_inits(max_t_1, min_s_0, NULL);
+    mpq_init(max_t_1);
+    mpq_init(min_s_0);
     
     //MAX(game->t, 1)
     if(mpq_cmp_si(game->t, 1, 1) > 0)
@@ -165,7 +166,8 @@ void game_get_alpha(game_t *game, mpq_t alpha)
     //return MAX(game->t, 1) - MIN(game->s, 0);
     mpq_sub(alpha, max_t_1, min_s_0);
     
-    mpq_clears(max_t_1, min_s_0, NULL);
+    mpq_clear(max_t_1);
+    mpq_clear(min_s_0);
 }
 
 void game_compute_p_i(game_t *game, int i, int j, mpq_t p_i)
@@ -176,7 +178,11 @@ void game_compute_p_i(game_t *game, int i, int j, mpq_t p_i)
     mpq_t tmp;
     mpq_t tmp2;
     
-    mpq_inits(payoff_i, payoff_j, alpha, tmp, tmp2, NULL);
+    mpq_init(payoff_i);
+    mpq_init(payoff_j);
+    mpq_init(alpha);
+    mpq_init(tmp);
+    mpq_init(tmp2);
     
     game_get_payoff_of_player(game, i, payoff_i);
     game_get_payoff_of_player(game, j, payoff_j);
@@ -199,7 +205,11 @@ void game_compute_p_i(game_t *game, int i, int j, mpq_t p_i)
     
     mpq_div(p_i, tmp, tmp2);
     
-    mpq_clears(payoff_i, payoff_j, alpha, tmp, tmp2, NULL);
+    mpq_clear(payoff_i);
+    mpq_clear(payoff_j);
+    mpq_clear(alpha);
+    mpq_clear(tmp);
+    mpq_clear(tmp2);
 }
 
 gboolean game_compute_p_ij(game_t *game, int i, mpq_t *p_ij)
@@ -346,7 +356,8 @@ int game_is_in_steady_state(game_t *game)
     int n = game->graph->n;
     mpq_t tmp;
     mpq_t m;
-    mpq_inits(m, tmp, NULL);
+    mpq_init(m);
+    mpq_init(tmp);
     
     gboolean s = TRUE;
     game_get_payoff_of_player(game, 0, m);
@@ -380,6 +391,7 @@ int game_is_in_steady_state(game_t *game)
         }
     }
     
-    mpq_clears(m, tmp, NULL);
+    mpq_clear(m);
+    mpq_clear(tmp);
     return state;
 }

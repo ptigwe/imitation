@@ -58,7 +58,10 @@ void experiment_run_simulation1(ExperimentFlags flags, game_t *game, result_t *r
     mpq_t t;
     mpq_t tmp;
     mpq_t sum;
-    mpq_inits(s, t, tmp, sum, NULL);
+    mpq_init(s);
+    mpq_init(t);
+    mpq_init(tmp);
+    mpq_init(sum);
     mpq_set_si(s, S_MIN, 1);
     mpq_set_si(t, T_MIN, 1);
     
@@ -117,7 +120,10 @@ void experiment_run_simulation1(ExperimentFlags flags, game_t *game, result_t *r
         mpq_add(s, s, tmp);
     }
     
-    mpq_clears(s, t, tmp, sum, NULL);
+    mpq_clear(s);
+    mpq_clear(t);
+    mpq_clear(tmp);
+    mpq_clear(sum);
 }
 
 result_t *experiment_run_simulation(ExperimentFlags flags)

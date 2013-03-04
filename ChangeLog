@@ -4,6 +4,9 @@
 
 	* src/experiment.c (experiment_save_results) : Added functionality for saving
 	  results as images.
+	* src/experiment.c : Fixed portability issues.
+	
+	* src/game.c : Fixed portability issues.
 	
 	* src/main.c (main) : Added functionality for saving results.
 	
