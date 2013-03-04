@@ -15,7 +15,7 @@
 void usage()
 {
     g_print("usage: simulator [-g] [-G graph type] [-a graph parameter 1] [-b graph parameter 1]\n");
-    g_print("                 [-h] [-i increments] [-p percentage] [-r repititions] [-t time] \n");
+    g_print("                 [-h] [-i increments] [-p percentage] [-r repetitions] [-t time] \n");
     g_print("                 [-u update rule] [-v]\n");
     exit(0);
 }
@@ -162,7 +162,7 @@ int main(int argc, char** argv)
     flags.update_rule = -1;
     flags.percentage = -1;
     flags.generations = -1;
-    flags.repititions = -1;
+    flags.repetitions = -1;
     flags.graph_type = -1;
     flags.graph_parameter_1 = -1;
     flags.increments = -1;
@@ -197,7 +197,7 @@ int main(int argc, char** argv)
                 flags.percentage = atoi(optarg);
                 break;
             case 'r':
-                flags.repititions = atoi(optarg);
+                flags.repetitions = atoi(optarg);
                 break;
             case 't':
                 flags.generations = atoi(optarg);
@@ -231,31 +231,13 @@ int main(int argc, char** argv)
         if(!experiment_validate_flags(flags))
             exit(1);
         
-        double whratio = (double) 250/165;
-        double height = 400;
-        int width = height * whratio;
-        height += (2 * Y_OFFSET);
-        width += (X_OFFSET1 + X_OFFSET2);
-        CvSize size = cvSize(width, height);
-        IplImage *res_img = cvCreateImage(size, IPL_DEPTH_64F, 3);
-        cvRectangle(res_img, cvPoint(0, 0), cvPoint(width, height), CV_RGB(1, 1, 1), CV_FILLED, 8, 0);
-        IplImage *coop_img = cvCloneImage(res_img);
-        IplImage *def_img = cvCloneImage(res_img);
-        IplImage *mix_img = cvCloneImage(res_img);
         //draw_colour_bar(img, 1000);
         
-        experiment_run_simulation(flags, res_img, coop_img, def_img, mix_img);
-        
-        cvShowImage("Cooperators", coop_img);
-        cvShowImage("Defectors", def_img);
-        cvShowImage("Mixed", mix_img);
-        cvShowImage("Result", res_img);
+        result_t *result = experiment_run_simulation(flags);
+        experiment_save_results(flags, result);
+
         //g_print("width - %f, height - %f\n", width, height);
-        cvWaitKey(0);
-        cvReleaseImage(&res_img);
-        cvReleaseImage(&coop_img);
-        cvReleaseImage(&def_img);
-        cvReleaseImage(&mix_img);
+        //cvWaitKey(0);
     }
     
     return 0;

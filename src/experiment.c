@@ -7,7 +7,7 @@ gboolean experiment_validate_flags(ExperimentFlags flags)
         return FALSE;
     }
     
-    if(flags.repititions <= 0)
+    if(flags.repetitions <= 0)
     {
         return FALSE;
     }
@@ -120,7 +120,7 @@ void experiment_run_simulation1(ExperimentFlags flags, game_t *game, result_t *r
     mpq_clears(s, t, tmp, sum, NULL);
 }
 
-void experiment_run_simulation(ExperimentFlags flags, IplImage *result_img, IplImage *coop_img, IplImage *def_img, IplImage *mix_img)
+result_t *experiment_run_simulation(ExperimentFlags flags)
 {
     double **results;
     int n = 2 * flags.increments;
@@ -149,11 +149,11 @@ void experiment_run_simulation(ExperimentFlags flags, IplImage *result_img, IplI
     game = game_new(flags.graph_type, flags.graph_parameter_1, flags.graph_parameter_2, p_c);
     
     int i;
-    for(i = 0; i < flags.repititions; ++i)
+    for(i = 0; i < flags.repetitions; ++i)
     {    
         if(!flags.verbose)
         {
-            g_print("\nExperiment %d / %d: \n", i + 1, flags.repititions);
+            g_print("\nExperiment %d / %d: \n", i + 1, flags.repetitions);
         }
         game_set_initial_configuration(game);
         experiment_run_simulation1(flags, game, result);
@@ -164,10 +164,10 @@ void experiment_run_simulation(ExperimentFlags flags, IplImage *result_img, IplI
         int j;
         for(j = 0; j <= n; ++j)
         {
-            result->result[i][j] = result->result[i][j] / (flags.repititions * game->graph->n);
-            result->cooperate[i][j] /= flags.repititions;
-            result->defect[i][j] /= flags.repititions;
-            result->mixed[i][j] /= flags.repititions;
+            result->result[i][j] = result->result[i][j] / (flags.repetitions * game->graph->n);
+            result->cooperate[i][j] /= flags.repetitions;
+            result->defect[i][j] /= flags.repetitions;
+            result->mixed[i][j] /= flags.repetitions;
             
             if(flags.verbose)
             {
@@ -178,15 +178,77 @@ void experiment_run_simulation(ExperimentFlags flags, IplImage *result_img, IplI
             gmp_printf("\n");
     }
     
-    result_to_image(result, result_img, coop_img, def_img, mix_img);
+    //result_to_image(result, result_img, coop_img, def_img, mix_img);
     /*
     for(i = 0; i <= n; ++i)
     {
         g_free(results[i]);
     }
     g_free(results);*/
-    result_free(result);
+    //experiment_save_results(flags, result);
+    //result_free(result);
     
     mpq_clear(p_c);
     game_free(game);
+    
+    return result;
+}
+
+void experiment_save_results(ExperimentFlags flags, result_t *result)
+{
+    double whratio = (double) 250/165;
+    double height = 400;
+    int width = height * whratio;
+    height += (2 * Y_OFFSET);
+    width += (X_OFFSET1 + X_OFFSET2);
+    CvSize size = cvSize(width, height);
+    
+    IplImage *res_img = cvCreateImage(size, IPL_DEPTH_64F, 3);
+    cvRectangle(res_img, cvPoint(0, 0), cvPoint(width, height), CV_RGB(1, 1, 1), CV_FILLED, 8, 0);
+    IplImage *coop_img = cvCloneImage(res_img);
+    IplImage *def_img = cvCloneImage(res_img);
+    IplImage *mix_img = cvCloneImage(res_img);
+    
+    IplImage *r_img = cvCreateImage(size, IPL_DEPTH_8U, 3);
+    IplImage *c_img = cvCreateImage(size, IPL_DEPTH_8U, 3);
+    IplImage *d_img = cvCreateImage(size, IPL_DEPTH_8U, 3);
+    IplImage *m_img = cvCreateImage(size, IPL_DEPTH_8U, 3);
+    
+    result_to_image(result, res_img, coop_img, def_img, mix_img);
+    
+    cvConvertScale(res_img, r_img, 255, 0);
+    cvConvertScale(coop_img, c_img, 255, 0);
+    cvConvertScale(def_img, d_img, 255, 0);
+    cvConvertScale(mix_img, m_img, 255, 0);
+    
+    char file_name[50];
+    
+    sprintf(file_name, "G%d-a%d-b%d-p%d-r%d-t%d-u%d-result.jpg", flags.graph_type,
+            flags.graph_parameter_1, flags.graph_parameter_2, flags.percentage, 
+            flags.repetitions, flags.generations, flags.update_rule);
+    cvSaveImage(file_name, r_img, 0);
+    
+    sprintf(file_name, "G%d-a%d-b%d-p%d-r%d-t%d-u%d-cooperators.jpg", flags.graph_type,
+            flags.graph_parameter_1, flags.graph_parameter_2, flags.percentage, 
+            flags.repetitions, flags.generations, flags.update_rule);
+    cvSaveImage(file_name, c_img, 0);
+    
+    sprintf(file_name, "G%d-a%d-b%d-p%d-r%d-t%d-u%d-defectors.jpg", flags.graph_type,
+            flags.graph_parameter_1, flags.graph_parameter_2, flags.percentage, 
+            flags.repetitions, flags.generations, flags.update_rule);
+    cvSaveImage(file_name, d_img, 0);
+    
+    sprintf(file_name, "G%d-a%d-b%d-p%d-r%d-t%d-u%d-mixed.jpg", flags.graph_type,
+            flags.graph_parameter_1, flags.graph_parameter_2, flags.percentage, 
+            flags.repetitions, flags.generations, flags.update_rule);
+    cvSaveImage(file_name, m_img, 0);
+    
+    cvReleaseImage(&r_img);
+    cvReleaseImage(&d_img);
+    cvReleaseImage(&m_img);
+    cvReleaseImage(&c_img);
+    cvReleaseImage(&res_img);
+    cvReleaseImage(&def_img);
+    cvReleaseImage(&mix_img);
+    cvReleaseImage(&coop_img);
 }

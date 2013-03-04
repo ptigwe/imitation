@@ -1,3 +1,12 @@
+2013-03-04 Tobenna Peter, Igwe <ptigwe@gmail.com>
+
+	* src/experiment.h (experiment_save_results) : New Function.
+
+	* src/experiment.c (experiment_save_results) : Added functionality for saving
+	  results as images.
+	
+	* src/main.c (main) : Added functionality for saving results.
+	
 2013-03-01 Tobenna Peter, Igwe <ptigwe@gmail.com>
 	
 	* src/experiment.c : Added functionality for the verbose flag

@@ -15,7 +15,7 @@ typedef struct
     int percentage;
     int generations;
     int gui;
-    int repititions;
+    int repetitions;
     int graph_type;
     int graph_parameter_1;
     int graph_parameter_2;
@@ -25,6 +25,7 @@ typedef struct
 
 gboolean experiment_validate_flags(ExperimentFlags flags);
 void experiment_run_simulation1(ExperimentFlags flags, game_t *game, result_t *result);
-void experiment_run_simulation(ExperimentFlags flags, IplImage *result_img, IplImage *coop_img, IplImage *def_img, IplImage *mix_img);
+result_t *experiment_run_simulation(ExperimentFlags flags);
+void experiment_save_results(ExperimentFlags flags, result_t *result);
 
 #endif
