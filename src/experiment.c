@@ -126,7 +126,90 @@ void experiment_run_simulation1(ExperimentFlags flags, game_t *game, result_t *r
     mpq_clear(sum);
 }
 
-result_t *experiment_run_simulation(ExperimentFlags flags)
+ExperimentFlags exp_flags;
+
+void *experiment_run_thread(void *res)
+{
+    result_t *result = (result_t *) res;
+
+    ExperimentFlags flags = exp_flags;
+    mpq_t p_c;
+    mpq_init(p_c);
+    mpq_set_si(p_c, flags.percentage, 100);
+
+    game_t *game;
+    game = game_new(flags.graph_type, flags.graph_parameter_1, flags.graph_parameter_2, p_c);
+
+    game_set_initial_configuration(game);
+    
+    experiment_run_simulation1(exp_flags, game, result);
+
+    game_free(game);
+    mpq_clear(p_c);
+    return NULL;
+}
+
+result_t *experiment_run_simulation_threaded(ExperimentFlags flags)
+{
+    exp_flags = flags;
+    
+    double **results;
+    int n = 2 * flags.increments;
+    result_t *result = result_new(n + 1);
+    
+    mpq_t p_c;
+    mpq_init(p_c);
+    mpq_set_si(p_c, flags.percentage, 100);
+    
+    game_t *game;
+    game = game_new(flags.graph_type, flags.graph_parameter_1, flags.graph_parameter_2, p_c);
+    
+    //g_thread_init(NULL);
+    GThread **thread = (GThread **)g_malloc(sizeof(GThread *) * flags.repetitions);
+
+    int i;
+    for(i = 0; i < flags.repetitions; ++i)
+    {
+        //thread[i] = g_thread_new(experiment_run_thread, result, TRUE, NULL);
+        thread[i] = g_thread_new("Exp", experiment_run_thread, result);
+        if(!flags.verbose)
+        {
+            g_print("\nExperiment %d / %d: \n", i + 1, flags.repetitions);
+        }
+        
+    }
+
+    for(i = 0; i < flags.repetitions; ++i)
+    {
+        g_thread_join(thread[i]);
+    }
+    
+    for(i = 0; i <= n; ++i)
+    {
+        int j;
+        for(j = 0; j <= n; ++j)
+        {
+            result->result[i][j] = result->result[i][j] / (flags.repetitions * game->graph->n);
+            result->cooperate[i][j] /= flags.repetitions;
+            result->defect[i][j] /= flags.repetitions;
+            result->mixed[i][j] /= flags.repetitions;
+            
+            if(flags.verbose)
+            {
+                g_print("%.3f ", result->result[i][j]);
+            }
+        }
+        if(flags.verbose)
+            gmp_printf("\n");
+    }
+    
+    mpq_clear(p_c);
+    game_free(game);
+    
+    return result;
+}
+
+result_t *experiment_run_simulation_non_threaded(ExperimentFlags flags)
 {
     double **results;
     int n = 2 * flags.increments;
@@ -198,6 +281,18 @@ result_t *experiment_run_simulation(ExperimentFlags flags)
     game_free(game);
     
     return result;
+}
+
+result_t *experiment_run_simulation(ExperimentFlags flags)
+{
+    if(flags.threaded)
+    {
+        return experiment_run_simulation_threaded(flags);
+    }
+    else
+    {
+        return experiment_run_simulation_non_threaded(flags);
+    }
 }
 
 void experiment_save_results(ExperimentFlags flags, result_t *result)

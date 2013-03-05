@@ -21,6 +21,7 @@ typedef struct
     int graph_parameter_2;
     int increments;
     int verbose;
+    int threaded;
 }ExperimentFlags;
 
 gboolean experiment_validate_flags(ExperimentFlags flags);

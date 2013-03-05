@@ -168,11 +168,12 @@ int main(int argc, char** argv)
     flags.increments = -1;
     flags.verbose = 0;
     flags.gui = FALSE;
+    flags.threaded = 0;
     
     int args = 0;
     
     int c;
-    while ((c = getopt (argc, argv, "a:b:gG:hi:p:r:t:u:v")) != -1)
+    while ((c = getopt (argc, argv, "a:b:gG:hi:mp:r:t:u:v")) != -1)
     {
         switch(c)
         {
@@ -192,6 +193,9 @@ int main(int argc, char** argv)
                 usage();
             case 'i':
                 flags.increments = atoi(optarg);
+                break;
+            case 'm':
+                flags.threaded = 1;
                 break;
             case 'p':
                 flags.percentage = atoi(optarg);

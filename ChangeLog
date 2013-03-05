@@ -1,3 +1,13 @@
+2013-03-05 Tobenna Peter, Igwe <ptigwe@gmail.com>
+
+	* src/experiment.h : Added a flag for multithreading.
+	
+	* src/experiment.c (experiment_run_simulation_multithreaded) : Added functionality
+	  for multithreading.
+	* src/experiment.c (experiment_run_thread) : Added functionality for multithreading.
+	
+	* src/main.c (main) : Added functionality for multithreading.
+	
 2013-03-04 Tobenna Peter, Igwe <ptigwe@gmail.com>
 
 	* src/experiment.h (experiment_save_results) : New Function.
