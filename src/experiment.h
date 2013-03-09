@@ -9,6 +9,8 @@
 #ifndef EXPERIMENT_H
 #define EXPERIMENT_H
 
+#define MAX_THREADS 10
+
 typedef struct
 {
     int update_rule;

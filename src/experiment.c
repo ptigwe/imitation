@@ -128,7 +128,7 @@ void experiment_run_simulation1(ExperimentFlags flags, game_t *game, result_t *r
 
 ExperimentFlags exp_flags;
 
-void *experiment_run_thread(void *res)
+void *experiment_run_thread(gpointer num, void *res)
 {
     result_t *result = (result_t *) res;
 
@@ -136,6 +136,9 @@ void *experiment_run_thread(void *res)
     mpq_t p_c;
     mpq_init(p_c);
     mpq_set_si(p_c, flags.percentage, 100);
+    
+    int i = GPOINTER_TO_INT(num);
+    g_print("Starting Experiment %d\n", i);
 
     game_t *game;
     game = game_new(flags.graph_type, flags.graph_parameter_1, flags.graph_parameter_2, p_c);
@@ -164,25 +167,16 @@ result_t *experiment_run_simulation_threaded(ExperimentFlags flags)
     game_t *game;
     game = game_new(flags.graph_type, flags.graph_parameter_1, flags.graph_parameter_2, p_c);
     
-    //g_thread_init(NULL);
-    GThread **thread = (GThread **)g_malloc(sizeof(GThread *) * flags.repetitions);
+    GThreadPool *pool = g_thread_pool_new((GFunc)experiment_run_thread, result, MAX_THREADS, FALSE, NULL);
 
     int i;
-    for(i = 0; i < flags.repetitions; ++i)
+    for(i = 1; i <= flags.repetitions; ++i)
     {
-        //thread[i] = g_thread_new(experiment_run_thread, result, TRUE, NULL);
-        thread[i] = g_thread_new("Exp", experiment_run_thread, result);
-        if(!flags.verbose)
-        {
-            g_print("\nExperiment %d / %d: \n", i + 1, flags.repetitions);
-        }
-        
+        gpointer num = GINT_TO_POINTER(i);
+        gboolean b = g_thread_pool_push(pool, num, NULL);
+        g_print("Started %d %d\n", b, i);
     }
-
-    for(i = 0; i < flags.repetitions; ++i)
-    {
-        g_thread_join(thread[i]);
-    }
+    g_thread_pool_free(pool, 0, 1);
     
     for(i = 0; i <= n; ++i)
     {

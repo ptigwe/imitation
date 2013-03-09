@@ -295,7 +295,7 @@ void game_update_with_mod_proportional_imitate(game_t *game)
         int n_i = graph_number_of_neighbours_of(game->graph, i);
         
         mpq_t *p;
-        p = (mpq_t *)malloc(sizeof(mpq_t) * n_i);
+        p = (mpq_t *)g_malloc(sizeof(mpq_t) * n_i);
         
         int j;
         for(j = 0; j < n_i; ++j)
@@ -320,6 +320,7 @@ void game_update_with_mod_proportional_imitate(game_t *game)
         {
             mpq_clear(p[j]);
         }
+        g_free(p);
     }
 
     for(i = 0; i < n; ++i)
