@@ -2,8 +2,9 @@
 
 	* src/experiment.h : Added new flag for exact populations.
 	
-	* src/experment.c (experiment_run_simulation_non_threaded, experiment_run_thread) :
+	* src/experiment.c (experiment_run_simulation_non_threaded, experiment_run_thread) :
 	  Added new flag for exact populations.
+	* src/experiment.c (experiment_validate_flags) : Added error messages.
 	
 	* src/game.h (game_set_initial_configuration) : Added functionality for generating exact populations.
 	
@@ -14,6 +15,8 @@
 	* src/game.c (game_set_initial_configuration) : Added functionality for generating exact populations.
 	
 	* src/main.c (main) : Added new flag for exact populations.
+	* src/main.c (main) : Added support for long flags using getopt_long.
+	
 	
 2013-03-09 Tobenna Peter, Igwe <ptigwe@gmail.com>
 

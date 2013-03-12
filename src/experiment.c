@@ -4,46 +4,55 @@ gboolean experiment_validate_flags(ExperimentFlags flags)
 {
     if(flags.generations <= 0)
     {
+        g_error("Number of generations must be greater than 0\n");
         return FALSE;
     }
     
     if(flags.repetitions <= 0)
     {
+        g_error("Number of repetitions must be greater than 0\n");
         return FALSE;
     }
     
     if(flags.update_rule != PROPORTIONAL_RULE && flags.update_rule != MOD_PROPORTIONAL_RULE)
     {
+        g_error("Update rule is either 1 for proportinoal rule or 2 for modified proportional rule\n");
         return FALSE;
     }
     
     if(flags.increments <= 0)
     {
+        g_error("Number of increments must be greater than 0\n");
         return FALSE;
     }
     
-    if(flags.percentage < 0)
+    if(flags.percentage < 0 && flags.percentage > 100)
     {
+        g_error("Percentage should be between 0 and 100\n");
         return FALSE;
     }
     
     if(flags.graph_type < 0 || flags.graph_type > 4)
     {
+        g_error("The graph type should be between 1 and 4 (inclusive)\n");
         return FALSE;
     }
     
     if(flags.graph_parameter_1 <= 0)
     {
+        g_error("The graph parameter 1 must be greater than 0\n");
         return FALSE;
     }
     
     if(flags.graph_type == UNIFORM_TREE && flags.graph_parameter_2 <= 0)
     {
+        g_error("The graph parameter 1 must be greater than 0\n");
         return FALSE;
     }
     
     if(flags.graph_type == GRID_GRAPH && flags.graph_parameter_2 <= 0)
     {
+        g_error("The graph parameter 1 must be greater than 0\n");
         return FALSE;
     }
     
