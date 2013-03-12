@@ -42,8 +42,46 @@ void game_free(game_t *game)
     g_free(game);
 }
 
-void game_set_initial_configuration(game_t *game)
+void game_set_initial_configuration_position(game_t *game)
 {
+    random_set_seed(time(NULL));
+    
+    int n = game->graph->n;
+    GArray *players = g_array_new(FALSE, FALSE, sizeof(int));
+    
+    int i;
+    for(i = 0; i < n; ++i)
+    {
+        game->initial_config[i] = 0;
+        game->current_config[i] = 0;
+        
+        g_array_append_val(players, i);
+    }
+    
+    mpq_t e;
+    mpq_init(e);
+    mpq_set_si(e, game->graph->n, 1);
+    mpq_mul(e, game->p_c, e);
+    int m = ceil(mpq_get_d(e));
+    mpq_clear(e);
+    for(i = 0; i < m; ++i)
+    {
+        int j = random_integer(n);
+        int x = g_array_index(players, int, j);
+        
+        game->initial_config[x] = 1;
+        game->current_config[x] = 1;
+        
+        g_array_remove_index_fast(players, j);
+        n--;
+    }
+    
+    g_array_free(players, TRUE);
+}
+
+void game_set_initial_configuration_population(game_t *game)
+{
+    game_set_initial_configuration_position(game);
     random_set_seed(time(NULL));
     
     int n = game->graph->n;
@@ -52,6 +90,18 @@ void game_set_initial_configuration(game_t *game)
     {
         game->initial_config[i] = random_boolean_with_probability(game->p_c);
         game->current_config[i] = game->initial_config[i];
+    }
+}
+
+void game_set_initial_configuration(game_t *game, gboolean position)
+{
+    if(position)
+    {
+        game_set_initial_configuration_position(game);
+    }
+    else
+    {
+        game_set_initial_configuration_population(game);
     }
 }
 
@@ -375,21 +425,18 @@ int game_is_in_steady_state(game_t *game)
         }
     }
     
-    if(s)
+    int coop = game_get_number_of_cooperators(game);
+    if(coop == 0)
     {
-        int coop = game_get_number_of_cooperators(game);
-        if(coop == 0)
-        {
-            state = ALL_DEFECT_STATE;
-        }
-        else if(coop == n)
-        {
-            state = ALL_COOPERATE_STATE;
-        }
-        else
-        {
-            state = MIXED_STATE;
-        }
+        state = ALL_DEFECT_STATE;
+    }
+    else if(coop == n)
+    {
+        state = ALL_COOPERATE_STATE;
+    }
+    else if(s)
+    {
+        state = MIXED_STATE;
     }
     
     mpq_clear(m);

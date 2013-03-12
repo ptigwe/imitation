@@ -1,3 +1,20 @@
+2013-03-12 Tobenna Peter, Igwe <ptigwe@gmail.com>
+
+	* src/experiment.h : Added new flag for exact populations.
+	
+	* src/experment.c (experiment_run_simulation_non_threaded, experiment_run_thread) :
+	  Added new flag for exact populations.
+	
+	* src/game.h (game_set_initial_configuration) : Added functionality for generating exact populations.
+	
+	* src/game.c (game_is_in_steady_state) : Fixed error of computing steady states.
+	* src/game.c (game_set_initial_configuration_population) : New Function. Generates a random population.
+	* src/game.c (game_set_initial_configuration_position) : New Function. Added functionality for 
+	  generating exact populations.
+	* src/game.c (game_set_initial_configuration) : Added functionality for generating exact populations.
+	
+	* src/main.c (main) : Added new flag for exact populations.
+	
 2013-03-09 Tobenna Peter, Igwe <ptigwe@gmail.com>
 
 	* src/experiment.h : Added value for max threads

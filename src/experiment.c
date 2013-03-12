@@ -143,7 +143,7 @@ void *experiment_run_thread(gpointer num, void *res)
     game_t *game;
     game = game_new(flags.graph_type, flags.graph_parameter_1, flags.graph_parameter_2, p_c);
 
-    game_set_initial_configuration(game);
+    game_set_initial_configuration(game, flags.position);
     
     experiment_run_simulation1(exp_flags, game, result);
 
@@ -238,7 +238,7 @@ result_t *experiment_run_simulation_non_threaded(ExperimentFlags flags)
         {
             g_print("\nExperiment %d / %d: \n", i + 1, flags.repetitions);
         }
-        game_set_initial_configuration(game);
+        game_set_initial_configuration(game, flags.position);
         experiment_run_simulation1(flags, game, result);
     }
     

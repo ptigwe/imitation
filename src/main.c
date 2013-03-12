@@ -20,28 +20,6 @@ void usage()
     exit(0);
 }
 
-void draw_colour_bar(IplImage *img, int steps)
-{
-    int height = img->height / steps;
-    
-    int i;
-    double x1 = 0;
-    double x2 = img->width;
-    for(i = 0; i <= steps; ++i)
-    {    
-        double c = ((double)i) / ((double) steps);
-        double y1 = img->height - (c * img->height);
-        double y2 = y1 - height;
-        
-        CvPoint p1 = cvPoint(x1, y1);
-        CvPoint p2 = cvPoint(x2, y2);
-        
-        CvScalar color = colourmap_gray_to_rgb(c);
-        printf("%.3f -> %.1f  %.1f, %.1f\n", c, color.val[0], color.val[1], color.val[2]);
-        cvRectangle(img, p1, p2, color, CV_FILLED, 8, 0);
-    }
-}
-
 int main(int argc, char** argv)
 {
     /*
@@ -169,11 +147,12 @@ int main(int argc, char** argv)
     flags.verbose = 0;
     flags.gui = FALSE;
     flags.threaded = 0;
+    flags.position = 0;
     
     int args = 0;
     
     int c;
-    while ((c = getopt (argc, argv, "a:b:gG:hi:mp:r:t:u:v")) != -1)
+    while ((c = getopt (argc, argv, "a:b:gG:hi:mop:r:t:u:v")) != -1)
     {
         switch(c)
         {
@@ -196,6 +175,9 @@ int main(int argc, char** argv)
                 break;
             case 'm':
                 flags.threaded = 1;
+                break;
+            case 'o':
+                flags.position = 1;
                 break;
             case 'p':
                 flags.percentage = atoi(optarg);

@@ -36,7 +36,7 @@ typedef struct
 game_t *game_new(int graph_type, int g_p1, int g_p2, mpq_t p_c);
 void game_free(game_t *game);
 
-void game_set_initial_configuration(game_t *game);
+void game_set_initial_configuration(game_t *game, gboolean position);
 void game_restore_initial_configuration(game_t *game);
 int* game_get_current_configuration(game_t *game);
 

@@ -24,6 +24,7 @@ typedef struct
     int increments;
     int verbose;
     int threaded;
+    int position;
 }ExperimentFlags;
 
 gboolean experiment_validate_flags(ExperimentFlags flags);
