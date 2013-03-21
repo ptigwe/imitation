@@ -10,11 +10,12 @@ void lcm(mpz_t l, mpz_t *num, gint n)
 {
     mpz_t tmp;
     mpz_init(tmp);
+    mpz_set_si(tmp, 1);
     
-    mpz_lcm(l, num[0], num[1]);
+    mpz_lcm(l, num[0], tmp);
     
     gint i;
-    for(i = 2; i < n; ++i)
+    for(i = 1; i < n; ++i)
     {
         mpz_set(tmp, l);
         mpz_lcm(l, tmp, num[i]);
