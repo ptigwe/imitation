@@ -182,8 +182,8 @@ result_t *experiment_run_simulation_threaded(ExperimentFlags flags)
     for(i = 1; i <= flags.repetitions; ++i)
     {
         gpointer num = GINT_TO_POINTER(i);
-        gboolean b = g_thread_pool_push(pool, num, NULL);
-        g_print("Started %d %d\n", b, i);
+        g_thread_pool_push(pool, num, NULL);
+        g_print("Started %d\n", i);
     }
     g_thread_pool_free(pool, 0, 1);
     

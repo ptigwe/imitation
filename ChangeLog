@@ -1,6 +1,7 @@
 2013-03-21 Tobenna Peter, Igwe <ptigwe@gmail.com>
 
 	* src/random.c (lcm) : Fixed error of lcm of 1 number.
+	* src/experiment.c (experiment_run_simulation_threaded) : Improved backwards compatibility
 	
 2013-03-12 Tobenna Peter, Igwe <ptigwe@gmail.com>
 
