@@ -1,5 +1,7 @@
 #include "game.h"
 
+#define ROUND(x) (int)(x +.5f);
+
 game_t *game_new(int graph_type, int g_p1, int g_p2, mpq_t p_c)
 {
     game_t *game = (game_t *)g_malloc(sizeof(game_t));
@@ -62,7 +64,7 @@ void game_set_initial_configuration_position(game_t *game)
     mpq_init(e);
     mpq_set_si(e, game->graph->n, 1);
     mpq_mul(e, game->p_c, e);
-    int m = ceil(mpq_get_d(e));
+    int m = ROUND(mpq_get_d(e));
     mpq_clear(e);
     for(i = 0; i < m; ++i)
     {
@@ -357,7 +359,7 @@ void game_update_with_mod_proportional_imitate(game_t *game)
         
         if(zero_sum)
         {
-            game->next_config[i] = game->next_config[i];
+            game->next_config[i] = game->current_config[i];
         }
         else
         {

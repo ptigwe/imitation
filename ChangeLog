@@ -1,3 +1,8 @@
+2013-03-25 Tobenna Peter, Igwe <ptigwe@gmail.com>
+
+	* src/game.c (game_update_with_mod_proportional_imitate) : Fixed error with the modified update rule.
+	* src/game.c (game_set_initial_configuration_position) : Fixed rounding up numbers.
+
 2013-03-21 Tobenna Peter, Igwe <ptigwe@gmail.com>
 
 	* src/random.c (lcm) : Fixed error of lcm of 1 number.
