@@ -132,6 +132,7 @@ int main(int argc, char** argv)
         
         result_t *result = experiment_run_simulation(flags);
         experiment_save_results(flags, result);
+        result_free(result);
     }
     
     return 0;

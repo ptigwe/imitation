@@ -1,3 +1,16 @@
+2013-04-21 Tobenna Peter, Igwe <ptigwe@gmail.com>
+
+	* src/main.c (main) : Fixed memory leak.
+	
+	* src/menubar.c (menubar_init) : Improved code.
+	
+	* src/result.c (result_new) : Fixed memory leak.
+	
+	* src/ui.c (ui_create_input_frame, ui_create_notebook, ui_init) : Improved user interface.
+	* src/ui.c (ui_get_experiment_flags ui_get*) : New Function. Integrated user interface with the simulator.
+	
+	* src/ui_action.c (ui_action_run_simuation) : Integrated user interface input with the simulator.
+	
 2013-03-25 Tobenna Peter, Igwe <ptigwe@gmail.com>
 
 	* src/game.c (game_update_with_mod_proportional_imitate) : Fixed error with the modified update rule.

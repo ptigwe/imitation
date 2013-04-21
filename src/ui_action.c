@@ -53,39 +53,6 @@ void ui_action_save_file(GtkWidget *widget, GtkWindow* window)
 {
 }
 
-gboolean ui_action_update_statusbar(GtkWidget* widget, GdkEventProximity* event, gchar* context)
-{
-    gchar* hint;
-    guint id = gtk_statusbar_get_context_id(GTK_STATUSBAR(statusbar), context);
-    
-    if(event->type == GDK_ENTER_NOTIFY)
-    {
-        hint = (gchar*)g_object_get_data(G_OBJECT(widget), context);
-        gtk_statusbar_push(GTK_STATUSBAR(statusbar), id, hint);
-    }
-    else if(event->type == GDK_LEAVE_NOTIFY)
-    {
-        gtk_statusbar_pop(GTK_STATUSBAR(statusbar), id);
-    }
-    
-    return FALSE;
-}
-
-void ui_action_enable_checkbox(GtkWidget* widget, GtkWidget* checkbox)
-{
-    gboolean val = gtk_widget_get_sensitive(checkbox);
-    gtk_widget_set_sensitive(checkbox, !val);
-    
-    if(val)
-        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(checkbox), FALSE);
-}
-
-void ui_action_enable_widget(GtkWidget* widget, GtkWidget* enable)
-{
-    gboolean val = gtk_widget_get_sensitive(enable);
-    gtk_widget_set_sensitive(enable, !val);
-}
-
 void ui_action_show_about_dialog(GtkWidget* widget, gpointer data)
 {
     GtkWidget* dialog;
@@ -105,4 +72,8 @@ void ui_action_show_about_dialog(GtkWidget* widget, gpointer data)
 
 void ui_action_run_simulation(GtkWidget* widget, gpointer data)
 {
+    ExperimentFlags flags = ui_get_experiment_flags();
+    experiment_validate_flags(flags);
+    result_t *result = experiment_run_simulation(flags);
+    result_free(result);
 }

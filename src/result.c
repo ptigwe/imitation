@@ -20,7 +20,7 @@ result_t *result_new(int n)
         res->mixed[i] = (double *)g_malloc(sizeof(double) * n);
         
         int j;
-        for(j = 0; j <= n; ++j)
+        for(j = 0; j < n; ++j)
         {
             res->result[i][j] = 0;
             res->cooperate[i][j] = 0;
