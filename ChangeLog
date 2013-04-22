@@ -1,3 +1,11 @@
+2013-04-23 Tobenna Peter, Igwe <ptigwe@gmail.com>
+
+	* src/result.c (result_to_image) : Added drawing the background.
+	
+	* src/ui.c (ui_set_tmp_image) : Added functionality for displaying a temporary image.
+	
+	* src/ui_actions.c (ui_action_run_simulation) : Added functionality to display results of experiments.
+	
 2013-04-21 Tobenna Peter, Igwe <ptigwe@gmail.com>
 
 	* src/main.c (main) : Fixed memory leak.

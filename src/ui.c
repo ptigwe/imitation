@@ -15,6 +15,7 @@ GtkWidget *res_widget;
 GtkWidget *coop_widget;
 GtkWidget *def_widget;
 GtkWidget *mix_widget;
+CvSize size;
 
 char *types[5] = {"Cycle graph", "Complete graph", "Complete bi-partite graph", "Uniform Tree", "Grid"};
 
@@ -96,6 +97,33 @@ void ui_create_input_frame(GtkWidget* inputBox)
     gtk_box_pack_start_defaults(GTK_BOX(inputBox), input_table);
 }
 
+void ui_set_tmp_image()
+{
+    double whratio = (double) 250/165;
+    double height = 400;
+    int width = height * whratio;
+    height += (2 * Y_OFFSET);
+    width += (X_OFFSET1 + X_OFFSET2);
+    size = cvSize(width, height);
+    
+    IplImage *img = cvCreateImage(size, IPL_DEPTH_8U, 3);
+    
+    GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data ( (guchar*)img->imageData, GDK_COLORSPACE_RGB,
+                                                    FALSE, img->depth,
+                                                    img->width,
+                                                    img->height,
+                                                    (img->widthStep),
+                                                    NULL, NULL );
+    ;
+    gtk_image_set_from_pixbuf(GTK_IMAGE(res_widget), pixbuf);
+    gtk_image_set_from_pixbuf(GTK_IMAGE(coop_widget), pixbuf);
+    gtk_image_set_from_pixbuf(GTK_IMAGE(def_widget), pixbuf);
+    gtk_image_set_from_pixbuf(GTK_IMAGE(mix_widget), pixbuf);
+    
+    cvReleaseImage(&img);
+    g_object_unref(G_OBJECT(pixbuf));
+}
+
 void ui_create_result_notebook(GtkWidget *result_box)
 {
     GtkWidget *notebook = gtk_notebook_new();
@@ -109,6 +137,7 @@ void ui_create_result_notebook(GtkWidget *result_box)
     coop_widget = gtk_image_new_from_file("");
     def_widget = gtk_image_new_from_file("");
     mix_widget = gtk_image_new_from_file("");
+    ui_set_tmp_image();
     
     gtk_notebook_append_page(GTK_NOTEBOOK(notebook), res_widget, res_label);
     gtk_notebook_append_page(GTK_NOTEBOOK(notebook), coop_widget, coop_label);
@@ -162,7 +191,7 @@ int ui_get_update_rule()
 
 int ui_get_repititions()
 {
-    return 10;
+    return 1;
 }
 
 ExperimentFlags ui_get_experiment_flags()
@@ -177,7 +206,7 @@ ExperimentFlags ui_get_experiment_flags()
     flags.update_rule = ui_get_update_rule();
     flags.repetitions = ui_get_repititions();
     
-    flags.increments = 25;
+    flags.increments = 50;
     flags.verbose = 0;
     flags.threaded = 0;
     flags.position = 1;

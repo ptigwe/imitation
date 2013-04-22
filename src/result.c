@@ -170,6 +170,11 @@ void result_to_image(result_t *res, IplImage *res_img, IplImage *coop_img, IplIm
     double y_spacing = height / n;
     double x_spacing = width / n;
     
+    cvRectangle(res_img, cvPoint(0, 0), cvPoint(res_img->width, res_img->height), CV_RGB(1, 1, 1), CV_FILLED, 8, 0);
+    cvRectangle(coop_img, cvPoint(0, 0), cvPoint(res_img->width, res_img->height), CV_RGB(1, 1, 1), CV_FILLED, 8, 0);
+    cvRectangle(def_img, cvPoint(0, 0), cvPoint(res_img->width, res_img->height), CV_RGB(1, 1, 1), CV_FILLED, 8, 0);
+    cvRectangle(mix_img, cvPoint(0, 0), cvPoint(res_img->width, res_img->height), CV_RGB(1, 1, 1), CV_FILLED, 8, 0);
+    
     int s;
     for(s = 0; s < n; ++s)
     {    
