@@ -11,6 +11,7 @@
 #include "colourmap.h"
 #include "result.h"
 #include <getopt.h>
+#include "config.h"
 
 void usage()
 {
@@ -129,6 +130,10 @@ int main(int argc, char** argv)
     {
         if(!experiment_validate_flags(flags))
             exit(1);
+            
+        #ifndef HAVE_GLIB_2_32
+        g_thread_init(NULL);
+        #endif
         
         result_t *result = experiment_run_simulation(flags);
         experiment_save_results(flags, result);

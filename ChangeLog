@@ -1,3 +1,31 @@
+2013-04-24 Tobenna Peter, Igwe <ptigwe@gmail.com>
+
+    * AUTHORS : New File. Added source files for autotools.
+    
+    * bin/Makefile.am : New File. Added source files for autotools.
+    
+    * COPYING : New File. Added source files for autotools.
+    
+    * configure.ac : New File. Added source files for autotools.
+    
+    * docs/Doxyfile : New File. Added source files for autotools.
+    
+    * docs/Makefile.am : New File. Added source files for autotools.
+    
+    * INSTALL : New File. Added source files for autotools.
+    
+    * Makefile.am : New File. Added source files for autotools.
+    
+    * NEWS : New File. Added source files for autotools.
+    
+    * README : New File. Added source files for autotools.
+
+    * src/main.c (main) : Added backward compatibility with GLib < 2.32
+    
+    * tests/bin/Makefile.am : New File. Added source files for autotools.
+    
+    * tests/game/game_payoff_test.c (game_payoff_test_*) : Updated calls to setting up population.
+
 2013-04-23 Tobenna Peter, Igwe <ptigwe@gmail.com>
 
 	* src/result.c (result_to_image) : Added drawing the background.

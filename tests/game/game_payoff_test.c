@@ -18,7 +18,7 @@ static void game_payoff_test_1()
     mpq_set_si(p_c, 1, 1);
     
     game_t *game = game_new(CYCLE_GRAPH, N, 0, p_c);
-    game_set_initial_configuration(game);
+    game_set_initial_configuration(game, 0);
     
     mpq_set_si(payoff, 2, 1);
     
@@ -44,7 +44,7 @@ static void game_payoff_test_2()
     mpq_set_si(p_c, 0, 1);
     
     game_t *game = game_new(CYCLE_GRAPH, N, 0, p_c);
-    game_set_initial_configuration(game);
+    game_set_initial_configuration(game, 0);
     
     mpq_set_si(payoff, 0, 1);
     
@@ -71,7 +71,7 @@ static void game_payoff_test_3()
     mpq_set_si(p_c, 1, 2);
     
     game_t *game = game_new(COMPLETE_GRAPH, N, 0, p_c);
-    game_set_initial_configuration(game);
+    game_set_initial_configuration(game, 0);
     
     int coop = game_get_number_of_cooperators(game);
     mpq_set_si(p_c, coop, 1);
@@ -112,7 +112,7 @@ static void game_payoff_test_4()
     mpq_set_si(p_c, 1, 5);
     
     game_t *game = game_new(COMPLETE_GRAPH, N, 0, p_c);
-    game_set_initial_configuration(game);
+    game_set_initial_configuration(game, 0);
     
     int coop = game_get_number_of_cooperators(game);
     mpq_set_si(p_c, coop, 1);
