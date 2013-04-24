@@ -14,7 +14,10 @@ static void game_payoff_test_1()
     mpq_t payoff;
     mpq_t payoff_i;
     
-    mpq_inits(payoff, payoff_i, p_c, NULL);
+    mpq_init(payoff);
+    mpq_init(payoff_i);
+    mpq_init(p_c);
+    
     mpq_set_si(p_c, 1, 1);
     
     game_t *game = game_new(CYCLE_GRAPH, N, 0, p_c);
@@ -29,7 +32,9 @@ static void game_payoff_test_1()
         g_assert(mpq_cmp(payoff, payoff_i) == 0);
     }
     
-    mpq_clears(payoff, payoff_i, p_c, NULL);
+    mpq_clear(payoff);
+    mpq_clear(payoff_i);
+    mpq_clear(p_c);
     
     game_free(game);
 }
@@ -40,7 +45,9 @@ static void game_payoff_test_2()
     mpq_t payoff;
     mpq_t payoff_i;
     
-    mpq_inits(payoff, payoff_i, p_c, NULL);
+    mpq_init(payoff);
+    mpq_init(payoff_i);
+    mpq_init(p_c);
     mpq_set_si(p_c, 0, 1);
     
     game_t *game = game_new(CYCLE_GRAPH, N, 0, p_c);
@@ -55,7 +62,9 @@ static void game_payoff_test_2()
         g_assert(mpq_cmp(payoff, payoff_i) == 0);
     }
     
-    mpq_clears(payoff, payoff_i, p_c, NULL);
+    mpq_clear(payoff);
+    mpq_clear(payoff_i);
+    mpq_clear(p_c);
     
     game_free(game);
 }
@@ -67,7 +76,11 @@ static void game_payoff_test_3()
     mpq_t payoff_d;
     mpq_t payoff_i;
     
-    mpq_inits(p_c, payoff_c, payoff_d, payoff_i, NULL);
+    mpq_init(p_c);
+    mpq_init(payoff_c);
+    mpq_init(payoff_d);
+    mpq_init(payoff_i);
+    
     mpq_set_si(p_c, 1, 2);
     
     game_t *game = game_new(COMPLETE_GRAPH, N, 0, p_c);
@@ -97,7 +110,11 @@ static void game_payoff_test_3()
         }
     }
     
-    mpq_clears(p_c, payoff_c, payoff_d, payoff_i, NULL);
+    mpq_clear(p_c); 
+    mpq_clear(payoff_c); 
+    mpq_clear(payoff_d); 
+    mpq_clear(payoff_i);
+    
     game_free(game);
 }
 
@@ -108,7 +125,11 @@ static void game_payoff_test_4()
     mpq_t payoff_d;
     mpq_t payoff_i;
     
-    mpq_inits(p_c, payoff_c, payoff_d, payoff_i, NULL);
+    
+    mpq_init(p_c);
+    mpq_init(payoff_c);
+    mpq_init(payoff_d);
+    mpq_init(payoff_i);
     mpq_set_si(p_c, 1, 5);
     
     game_t *game = game_new(COMPLETE_GRAPH, N, 0, p_c);
@@ -138,7 +159,12 @@ static void game_payoff_test_4()
         }
     }
     
-    mpq_clears(p_c, payoff_c, payoff_d, payoff_i, NULL);
+    
+    mpq_clear(p_c); 
+    mpq_clear(payoff_c); 
+    mpq_clear(payoff_d); 
+    mpq_clear(payoff_i);
+    
     game_free(game);
 }
 
@@ -149,7 +175,11 @@ static void game_payoff_test_5()
     mpq_t payoff_d;
     mpq_t payoff_i;
     
-    mpq_inits(p_c, payoff_c, payoff_d, payoff_i, NULL);
+    mpq_init(p_c);
+    mpq_init(payoff_c);
+    mpq_init(payoff_d);
+    mpq_init(payoff_i);
+    
     mpq_set_si(p_c, 1, 2);
     
     game_t *game = game_new(CYCLE_GRAPH, N, 0, p_c);
@@ -176,7 +206,12 @@ static void game_payoff_test_5()
         }
     }
     
-    mpq_clears(p_c, payoff_c, payoff_d, payoff_i, NULL);
+    
+    mpq_clear(p_c); 
+    mpq_clear(payoff_c); 
+    mpq_clear(payoff_d); 
+    mpq_clear(payoff_i);
+    
     game_free(game);
 }
 

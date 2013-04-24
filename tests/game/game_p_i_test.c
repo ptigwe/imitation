@@ -37,7 +37,10 @@ static void game_p_i_test_1()
     mpq_t p_i_c;
     mpq_t p_i_d;
     
-    mpq_inits(p_c, p_i_c, p_i_d, NULL);
+    mpq_init(p_c); 
+    mpq_init(p_i_c); 
+    mpq_init(p_i_d);
+    
     mpq_set_si(p_c, 1, 2);
     
     game_t *game = game_new(CYCLE_GRAPH, N, 0, p_c);
@@ -54,7 +57,10 @@ static void game_p_i_test_1()
     
     game_p_i_test(game, p_i_c, p_i_d);
     
-    mpq_clears(p_c, p_i_c, p_i_d, NULL);
+    mpq_clear(p_c); 
+    mpq_clear(p_i_c); 
+    mpq_clear(p_i_d);
+    
     game_free(game);
 }
 
@@ -64,7 +70,10 @@ static void game_p_i_test_2()
     mpq_t p_i_c;
     mpq_t p_i_d;
     
-    mpq_inits(p_c, p_i_c, p_i_d, NULL);
+    
+    mpq_init(p_c); 
+    mpq_init(p_i_c); 
+    mpq_init(p_i_d);
     mpq_set_si(p_c, 1, 2);
     
     game_t *game = game_new(CYCLE_GRAPH, N, 0, p_c);
@@ -81,7 +90,10 @@ static void game_p_i_test_2()
     
     game_p_i_test(game, p_i_c, p_i_d);
     
-    mpq_clears(p_c, p_i_c, p_i_d, NULL);
+    
+    mpq_clear(p_c); 
+    mpq_clear(p_i_c); 
+    mpq_clear(p_i_d);
     game_free(game);
 }
 
@@ -91,7 +103,10 @@ static void game_p_i_test_3()
     mpq_t p_i_c;
     mpq_t p_i_d;
     
-    mpq_inits(p_c, p_i_c, p_i_d, NULL);
+    
+    mpq_init(p_c); 
+    mpq_init(p_i_c); 
+    mpq_init(p_i_d);
     mpq_set_si(p_c, 1, 2);
     
     game_t *game = game_new(CYCLE_GRAPH, N, 0, p_c);
@@ -108,7 +123,10 @@ static void game_p_i_test_3()
     
     game_p_i_test(game, p_i_c, p_i_d);
     
-    mpq_clears(p_c, p_i_c, p_i_d, NULL);
+    
+    mpq_clear(p_c); 
+    mpq_clear(p_i_c); 
+    mpq_clear(p_i_d);
     game_free(game);
 }
 

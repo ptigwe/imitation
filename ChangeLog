@@ -25,6 +25,9 @@
     * tests/bin/Makefile.am : New File. Added source files for autotools.
     
     * tests/game/game_payoff_test.c (game_payoff_test_*) : Updated calls to setting up population.
+      Improved backwards compatibility with GNUMP.
+    
+    * tests/game/game_p_i_test.c (game_p_i_test_*) : Improved backwards compatibility with GNUMP.
 
 2013-04-23 Tobenna Peter, Igwe <ptigwe@gmail.com>
 
